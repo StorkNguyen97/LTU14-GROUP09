@@ -1,7 +1,7 @@
 {
-  "name": "GROUP-09",
+  "name": "user-license-management",
   "version": "1.0.0",
-  "description": "Hệ thống quản lý License",
+  "description": "Hệ thống quản lý Lisences",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,10 +11,8 @@
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0",
-    "ejs": "^2.6.1",
     "express": "^4.16.4",
     "nodemon": "^1.18.10",
-    "socket.io": "^2.2.0",
     "yarn": "^1.13.0"
   }
 }
