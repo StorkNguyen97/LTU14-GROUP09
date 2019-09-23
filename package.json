@@ -1,7 +1,7 @@
 {
-  "name": "chatroomapp",
+  "name": "GROUP-09",
   "version": "1.0.0",
-  "description": "a chat room using nodejs",
+  "description": "Hệ thống quản lý License",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
