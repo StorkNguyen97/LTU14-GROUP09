@@ -1,2 +1,2 @@
 # LTU14-GROUP09
-Hệ thống chat online sử dụng Socket.io
+Hệ thống Quản lý License người dùng
