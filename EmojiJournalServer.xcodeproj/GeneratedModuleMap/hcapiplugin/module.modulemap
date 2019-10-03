@@ -1,0 +1,4 @@
+module hcapiplugin {
+    umbrella "/Users/amt1/Downloads/deleting-entries-web-final/final/EmojiJournalServer/.build/checkouts/omr-agentcore-1964429777908191617/src/hcapiplugin/include"
+    export *
+}
