@@ -85,3 +85,6 @@ sw.*
 
 yarn.lock
 package-lock.json
+
+#Mac file
+.DS_Store
