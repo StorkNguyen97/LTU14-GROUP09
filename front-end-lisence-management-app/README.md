@@ -51,4 +51,18 @@ For detailed explanation on how things work, checkout the [guide](https://github
 
 1. Create a dockerfile with all environments for project
 2. run script - "docker build -t username/projectname ."  for setup all environments
-3. 
+3. after build run script "docker run -p 3000:80 name/idcontainer"
+4. test container run, if docker run - application ready to deploy 
+
+
+## Deploy to Heroku
+1. heroku login
+2. heroku container:login
+3. git clone 
+4. cd to folder contains package.json
+5. heroku create -a name-app
+6. heroku container:push web -a name-app
+7. heroku container:release web -a name-app
+8. heroku open --app name-app
+
+## Redeploy to Heroku after change code
