@@ -45,3 +45,10 @@ For detailed explanation on how things work, checkout the [guide](https://github
 ## License
 
 [MIT](https://github.com/cristijora/vue-paper-dashboard/blob/master/LICENSE.md)
+
+
+## Dockerize VueJS tutorial
+
+1. Create a dockerfile with all environments for project
+2. run script - "docker build -t username/projectname ."  for setup all environments
+3. 
