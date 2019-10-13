@@ -15,7 +15,7 @@ Client
 
 Server
 
-1. To start client you need to change directory to front-end-lisenece-management-app
+1. To start client you need to change directory to back-end-lisenece-management-app
 2. Install strapi by script npm install strapi@beta -g
 3. yarn install | npm install to install node modules
 4. to start server run yarn start | npm run start
