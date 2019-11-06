@@ -1,0 +1,28 @@
+{
+  "connection": "default",
+  "collectionName": "device",
+  "info": {
+    "name": "device",
+    "description": ""
+  },
+  "options": {
+    "timestamps": true
+  },
+  "attributes": {
+    "name": {
+      "type": "string"
+    },
+    "license": {
+      "model": "license",
+      "via": "devices"
+    },
+    "status": {
+      "type": "string"
+    },
+    "user": {
+      "model": "user",
+      "via": "devices",
+      "plugin": "users-permissions"
+    }
+  }
+}

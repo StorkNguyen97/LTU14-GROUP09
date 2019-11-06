@@ -7,7 +7,7 @@
         "host": "db",
         "srv": false,
         "port": "27017",
-        "database": "strapi",
+        "database": "strapi-app",
         "username": "",
         "password": ""
       },
