@@ -2,9 +2,9 @@
   <div class="wrapper">
     <side-bar>
       <template slot="links">
-        <sidebar-link to="/dashboard" name="Main" icon="ti-panel" />
-        <sidebar-link to="/stats" name="User Profile" icon="ti-user" />
-        <sidebar-link to="/table-list" name="Table List" icon="ti-view-list-alt" />
+        <sidebar-link to="/license" name="Licenses" icon="ti-key" />
+        <sidebar-link to="/user" name="Users" icon="ti-user" />
+        <sidebar-link to="/app" name="Apps" icon="ti-view-grid" />
       </template>
       <mobile-menu>
         <li class="nav-item">
@@ -21,7 +21,6 @@
 
       <dashboard-content @click.native="toggleSidebar"></dashboard-content>
 
-      <content-footer></content-footer>
     </div>
   </div>
 </template>
@@ -29,13 +28,11 @@
 </style>
 <script>
 import TopNavbar from "./TopNavbar.vue";
-import ContentFooter from "./ContentFooter.vue";
 import DashboardContent from "./Content.vue";
 import MobileMenu from "./MobileMenu";
 export default {
   components: {
     TopNavbar,
-    ContentFooter,
     DashboardContent,
     MobileMenu
   },

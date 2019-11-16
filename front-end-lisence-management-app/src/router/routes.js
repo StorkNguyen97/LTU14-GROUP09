@@ -5,33 +5,27 @@ import NotFound from "@/pages/NotFoundPage.vue";
 // Admin pages
 import Dashboard from "@/pages/Dashboard.vue";
 import UserProfile from "@/pages/UserProfile.vue";
-import Keys from "@/pages/Keys.vue";
 import TableList from "@/pages/TableList.vue";
 
 const routes = [
   {
     path: "/",
     component: DashboardLayout,
-    redirect: "/dashboard",
+    redirect: "/license",
     children: [
       {
-        path: "dashboard",
-        name: "dashboard",
+        path: "license",
+        name: "license",
         component: Dashboard
       },
       {
-        path: "stats",
-        name: "stats",
+        path: "user",
+        name: "user",
         component: UserProfile
       },
       {
-        path: "keys",
-        name: "keys",
-        component: Keys
-      },
-      {
-        path: "table-list",
-        name: "table-list",
+        path: "app",
+        name: "app",
         component: TableList
       }
     ]
