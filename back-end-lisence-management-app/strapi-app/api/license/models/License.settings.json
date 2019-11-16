@@ -1,0 +1,27 @@
+{
+  "connection": "default",
+  "collectionName": "",
+  "info": {
+    "name": "license",
+    "description": ""
+  },
+  "options": {
+    "timestamps": true
+  },
+  "attributes": {
+    "key": {
+      "type": "string"
+    },
+    "expriedDate": {
+      "type": "date"
+    },
+    "software": {
+      "model": "software",
+      "via": "licenses"
+    },
+    "devices": {
+      "collection": "device",
+      "via": "license"
+    }
+  }
+}
