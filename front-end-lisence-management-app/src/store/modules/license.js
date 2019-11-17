@@ -1,5 +1,4 @@
 import axios from "@/plugins/axios";
-import alert from "@/plugins/alert";
 const LICENSE_API = "/licenses";
 
 export default {
@@ -9,16 +8,21 @@ export default {
     item: {}
   },
   actions: {
-    fetchItems({ commit, rootState }) {
+    fetchItems({ commit }) {
+      return axios.get(LICENSE_API).then(result => commit("setItems", result));
+    },
+    fetchItemById({ commit }, id) {
       return axios
-        .get(LICENSE_API)
-        .then(result => commit("setItems", result))
-        .catch(e => alert.error(e));
+        .get(`${LICENSE_API}/${id}`)
+        .then(result => commit("setItem", result));
     }
   },
   mutations: {
     setItems(state, data) {
       state.items = data;
+    },
+    setItem(state, data) {
+      state.item = data;
     }
   }
 };

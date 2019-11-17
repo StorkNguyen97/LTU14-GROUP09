@@ -1,6 +1,12 @@
 <template>
   <div>
-    <b-card title="List License Key">
+    <div class="text-right">
+      <b-button variant="outline-primary" @click="openModalCreated">
+        <i class="fa fa-plus mr-1"></i>
+        Create License
+      </b-button>
+    </div>
+    <b-card title="List License Key" class="mt-2">
       <b-table striped hover :fields="fields" show-empty :items="items">
         <template slot="index" slot-scope="data">{{
           (currentPage - 1) * CONSTANTS.ITEM_PER_PAGE + (data.index + 1)
@@ -46,11 +52,47 @@
         ></b-pagination>
       </div>
     </b-card>
+
+    <!-- Create/Edit License Info -->
+    <b-modal
+      ref="createOrUpdateLicenseModal"
+      :ok-title="`${licenseInfo._id ? 'Update' : 'Create'}`"
+      :title="
+        `${licenseInfo.id ? 'Update License Info' : 'Create New License'}`
+      "
+      @ok="handleCreateGroupOk"
+      no-close-on-esc
+      no-close-on-backdrop
+    >
+      <b-form-group label="License Key">
+        <b-form-input v-model="licenseInfo.key" />
+      </b-form-group>
+      <b-form-group label="Expired Date">
+        <b-form-input maxlength="255" v-model="licenseInfo.expriedDate" />
+      </b-form-group>
+      <b-form-group label="Software">
+        <b-form-input maxlength="255" v-model="licenseInfo.software" />
+      </b-form-group>
+      <b-form-group label="Devices">
+        <b-form-input maxlength="255" v-model="licenseInfo.key" />
+      </b-form-group>
+    </b-modal>
+
+    <!-- Confirm Delete License -->
+    <b-modal
+      ref="deleteGroupModal"
+      title="Confirmation"
+      no-close-on-esc
+      no-close-on-backdrop
+      ok-variant="danger"
+      @ok="onDeleteGroup"
+      >Are you sure to delete this license?</b-modal
+    >
   </div>
 </template>
 <script>
 import { mapActions, mapState } from "vuex";
-import CONSTANTS from '@/constants';
+import CONSTANTS from "@/constants";
 export default {
   mounted() {
     this.fetchItems();
@@ -81,7 +123,8 @@ export default {
         }
       ],
       CONSTANTS,
-      currentPage: 1
+      currentPage: 1,
+      licenseInfo: {}
     };
   },
   computed: {
@@ -95,7 +138,16 @@ export default {
   methods: {
     ...mapActions({
       fetchItems: "license/fetchItems"
-    })
+    }),
+    handleCreateGroupOk() {},
+    onDeleteGroup() {},
+    openModalCreated() {
+      this.resetForm();
+      this.$refs.createOrUpdateLicenseModal.show();
+    },
+    resetForm() {
+      this.licenseInfo = {};
+    }
   }
 };
 </script>
