@@ -7,8 +7,13 @@ import BootstrapVue from 'bootstrap-vue';
 import PaperDashboard from "./plugins/paperDashboard";
 import "vue-notifyjs/themes/default.css";
 
+// Filters
+import { formatDatetime } from './utils/datetime';
+
 Vue.use(PaperDashboard);
 Vue.use(BootstrapVue);
+
+Vue.filter('formatDateTime', formatDatetime);
 
 /* eslint-disable no-new */
 new Vue({

@@ -1,24 +1,24 @@
 import axios from "@/plugins/axios";
 import alert from "@/plugins/alert";
-const KEYS_API = "/keys";
+const LICENSE_API = "/licenses";
 
 export default {
   namespaced: true,
   state: {
-    keys: [],
-    key: {}
+    items: [],
+    item: {}
   },
   actions: {
-    fetchKeys({ commit, rootState }) {
+    fetchItems({ commit, rootState }) {
       return axios
-        .get(KEYS_API)
-        .then(result => commit("setKeys", result))
+        .get(LICENSE_API)
+        .then(result => commit("setItems", result))
         .catch(e => alert.error(e));
     }
   },
   mutations: {
-    setKeys(state, keys) {
-      state.keys = keys;
+    setItems(state, data) {
+      state.items = data;
     }
   }
 };

@@ -7,7 +7,9 @@ const axios = Axios.create({
   baseURL: process.env.VUE_APP_API_ENDPOINT
 });
 
-// setCommonAuthorizationToken(localStorage.jwt)
+setCommonAuthorizationToken(
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGNmYzQ5ZmE0OTJjNTAxNjU3ZDhmMWQiLCJpYXQiOjE1NzM5NTc0ODYsImV4cCI6MTU3NjU0OTQ4Nn0.ytBvqCudSZ1H9VV6ZY0ook1N1GBlyvcncVh_9g1x8zg"
+);
 
 axios.interceptors.request.use(
   config => {
