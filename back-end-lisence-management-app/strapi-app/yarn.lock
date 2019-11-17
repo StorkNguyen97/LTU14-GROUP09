@@ -3563,9 +3563,10 @@ strapi-utils@3.0.0-alpha.26.2:
     pluralize "^7.0.0"
     shelljs "^0.7.7"
 
-strapi@3.0.0-alpha.26.2:
+strapi@^3.0.0-alpha.26.2:
   version "3.0.0-alpha.26.2"
   resolved "https://registry.yarnpkg.com/strapi/-/strapi-3.0.0-alpha.26.2.tgz#bceac4a784a3266a02397794a69be35f6aa8589e"
+  integrity sha512-bzkHzS08yxRBri+dfVycnggBABacpq0w+6earIiHD0xnipymvPqeV5QmMSFWMECVNcUWeI/1EwbNUZOeYv6lVw==
   dependencies:
     async "^2.1.2"
     boom "^5.2.0"
