@@ -1,40 +1,26 @@
 <template>
-  <div :class="{'nav-open': $sidebar.showSidebar}">
-    <notifications></notifications>
-    <router-view></router-view>
-  </div>
+  <router-view></router-view>
 </template>
 
 <script>
-export default {};
+export default {
+  name: 'app'
+}
 </script>
 
 <style lang="scss">
-.vue-notifyjs.notifications {
-  .alert {
-    z-index: 10000;
-  }
-  .list-move {
-    transition: transform 0.3s, opacity 0.4s;
-  }
-  .list-item {
-    display: inline-block;
-    margin-right: 10px;
-  }
-  .list-enter-active {
-    transition: transform 0.2s ease-in, opacity 0.4s ease-in;
-  }
-  .list-leave-active {
-    transition: transform 1s ease-out, opacity 0.4s ease-out;
-  }
-
-  .list-enter {
-    opacity: 0;
-    transform: scale(1.1);
-  }
-  .list-leave-to {
-    opacity: 0;
-    transform: scale(1.2, 0.7);
-  }
-}
+  // CoreUI Icons Set
+  @import '~@coreui/icons/css/coreui-icons.min.css';
+  /* Import Font Awesome Icons Set */
+  $fa-font-path: '~font-awesome/fonts/';
+  @import '~font-awesome/scss/font-awesome.scss';
+  /* Import Simple Line Icons Set */
+  $simple-line-font-path: '~simple-line-icons/fonts/';
+  @import '~simple-line-icons/scss/simple-line-icons.scss';
+  /* Import Flag Icons Set */
+  @import '~flag-icon-css/css/flag-icon.min.css';
+  /* Import Bootstrap Vue Styles */
+  @import '~bootstrap-vue/dist/bootstrap-vue.css';
+  // Import Main styles for this application
+  @import 'assets/scss/style';
 </style>
