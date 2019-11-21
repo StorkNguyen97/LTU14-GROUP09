@@ -2,8 +2,8 @@
       <TheFooter>
         <div>
           <!--footer-->
-          <a href="https://coreui.io">CoreUI</a>
-          <span class="ml-1">&copy; 2018 creativeLabs.</span>
+          <a href="https://coreui.io">GROUP09</a>
+          <span class="ml-1">&copy; 2019 LTU14.</span>
         </div>
         <div class="ml-auto">
           <span class="mr-1">Powered by</span>
