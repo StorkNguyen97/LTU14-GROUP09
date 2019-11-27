@@ -1,5 +1,5 @@
 import Axios from "axios";
-import store from "@/store";
+import store from "@/store/index";
 import loading from "./loading";
 
 const CONNECTION_FAIL_MSG = "Connection fail";
