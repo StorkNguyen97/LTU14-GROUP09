@@ -1,4 +1,5 @@
 import axios from "@/plugin/axios";
+const LICENSE_API = "/licenses";
 // Init state
 const state = {
   items: [],
@@ -10,28 +11,28 @@ const getters = {};
 
 // Actions
 const actions = {
-  getListLicenses: (context, params) => {
-    return axios.get("item.index", params).then(response => {
+  getListLicenses: (context) => {
+    return axios.get(LICENSE_API).then(response => {
       context.commit("GET_LIST_GROUPS_SUCCESS", response);
     });
   },
   getLicenseInfo: (context, params) => {
-    return axios.get("item.detail", params).then(response => {
+    return axios.get(LICENSE_API, params).then(response => {
       context.commit("GET_GROUP_INFO_SUCCESS", response);
     });
   },
   createNewLicense: (context, params) => {
-    return axios.post("item.index", params).then(response => {
+    return axios.post(LICENSE_API, params).then(response => {
       context.commit("ADD_NEW_GROUP_SUCCESS", response);
     });
   },
   updateLicenseInfo: (context, params) => {
-    return axios.put("item.index", params).then(response => {
+    return axios.put(LICENSE_API, params).then(response => {
       context.commit("UPDATE_GROUP_INFO_SUCCESS", response);
     });
   },
   deleteLicenseById: (context, params) => {
-    return axios.delete("item.detail", params).then(() => {
+    return axios.delete(LICENSE_API, params).then(() => {
       context.commit("DELETE_GROUP_BY_ID_SUCCESS", params);
     });
   }

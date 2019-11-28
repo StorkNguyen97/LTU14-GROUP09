@@ -11,6 +11,8 @@ setCommonAuthorizationToken(
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGNmYzQ5ZmE0OTJjNTAxNjU3ZDhmMWQiLCJpYXQiOjE1NzM5NTc0ODYsImV4cCI6MTU3NjU0OTQ4Nn0.ytBvqCudSZ1H9VV6ZY0ook1N1GBlyvcncVh_9g1x8zg"
 );
 
+axios.defaults.headers.common['Content-Type'] = 'application/json';
+
 axios.interceptors.request.use(
   config => {
     if (!config.hideLoading) loading.show();

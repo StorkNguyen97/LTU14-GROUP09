@@ -74,7 +74,7 @@ import CONSTANTS from "@/constants";
 export default {
   mounted: function() {
     this.$nextTick(function() {
-      this.getListGroups();
+      this.getListLicenses();
     });
   },
   components: {},
@@ -102,7 +102,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getListGroups: "license/getListLicenses",
+      getListLicenses: "license/getListLicenses",
       createNewGroup: "license/createNewGroup",
       getGroupInfo: "license/getGroupInfo",
       updateGroupInfo: "license/updateGroupInfo",
