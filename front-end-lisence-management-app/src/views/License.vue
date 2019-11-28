@@ -1,10 +1,8 @@
 <template>
   <div class="animated fadeIn h-100">
-    <div class="page-content sub-header-page-content p-4">
       <b-table
         striped
         hover
-        dark
         :items="listGroups"
         :fields="fields"
         show-empty
@@ -22,18 +20,16 @@
           align="center"
         ></b-pagination>
       </div>
-    </div>
 
     <!-- Create/Edit Group Info -->
-    <b-modal
+    <!-- <b-modal
       ref="createOrUpdateGroupModal"
       title="Create new"
-      :cancel-title="$t('common.cancel')"
       @ok="handleCreateGroupOk"
       no-close-on-esc
       no-close-on-backdrop
     >
-      <b-form-group :label="$t('groups.groupName')">
+      <b-form-license :label="$t('groups.groupName')">
         <b-form-input
           maxlength="255"
           v-model="groupInfo.name"
@@ -46,8 +42,8 @@
           v-show="errors.has('groupName')"
           class="validation-message text-danger"
         >{{ errors.first('groupName') }}</div>
-      </b-form-group>
-      <b-form-group :label="`${$t('common.description')} ${$t('common.optional')}`">
+      </b-form-license>
+      <b-form-license :label="`${$t('common.description')} ${$t('common.optional')}`">
         <b-form-textarea
           v-model="groupInfo.desc"
           maxlength="255"
@@ -55,11 +51,11 @@
           rows="3"
           max-rows="6"
         ></b-form-textarea>
-      </b-form-group>
-    </b-modal>
+      </b-form-license>
+    </b-modal> -->
 
     <!-- Confirm Delete Group -->
-    <b-modal
+    <!-- <b-modal
       ref="deleteGroupModal"
       :title="$t('common.confirmation')"
       no-close-on-esc
@@ -68,7 +64,7 @@
       :cancel-title="$t('common.cancel')"
       ok-variant="danger"
       @ok="onDeleteGroup"
-    >{{ $t('groups.deleteConfirmMsg') }}</b-modal>
+    >{{ $t('groups.deleteConfirmMsg') }}</b-modal> -->
   </div>
 </template>
 
@@ -97,17 +93,16 @@ export default {
   },
   computed: {
     ...mapState({
-      listGroups: state => state.group.groups,
-      listUsersByGroup: state => state.user.usersByGroup,
-      group: state => state.group.group
+      listGroups: state => state.license.items,
+      license: state => state.license.item
     }),
     countRow() {
-      return this.listGroups.length;
+      return;
     }
   },
   methods: {
     ...mapActions({
-      getListGroups: "license/getListGroups",
+      getListGroups: "license/getListLicenses",
       createNewGroup: "license/createNewGroup",
       getGroupInfo: "license/getGroupInfo",
       updateGroupInfo: "license/updateGroupInfo",
@@ -128,7 +123,7 @@ export default {
           this.$refs.createOrUpdateGroupModal.hide();
           this.$toaster.success(
             `${
-              this.group.id
+              this.license.id
                 ? this.$i18n.t("common.update")
                 : this.$i18n.t("common.create")
             } ${this.$i18n.t("groups.groupSuccess")}`
@@ -143,7 +138,7 @@ export default {
     async showUpdateGroupModal(groupId) {
       this.resetForm();
       await this.getGroupInfo({ id: groupId });
-      this.groupInfo = { ...this.group };
+      this.groupInfo = { ...this.license };
       this.$refs.createOrUpdateGroupModal.show();
     },
     async updateGroup() {
