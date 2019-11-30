@@ -30,7 +30,7 @@
           <b-button
             variant="primary"
             class="mr-1 min-width-none"
-            @click="showUpdateGroupModal(row.item.id)"
+            @click="showUpdateGroupModal(row.item._id)"
             v-b-tooltip.hover
             title="Edit"
           >
@@ -38,7 +38,7 @@
           </b-button>
           <b-button
             variant="danger"
-            @click="confirmDelete(row.item.id)"
+            @click="confirmDelete(row.item._id)"
             v-b-tooltip.hover
             class="min-width-none"
             title="Delete"
@@ -140,7 +140,7 @@ export default {
         }
       ],
       itemInfo: {},
-      currentGroupId: null,
+      currentId: null,
       CONSTANTS,
       currentPage: 1
     };
@@ -187,7 +187,7 @@ export default {
     },
     async showUpdateGroupModal(id) {
       this.resetForm();
-      await this.getInfo({ id: id });
+      await this.getInfo(id);
       this.itemInfo = { ...this.license };
       this.$refs.createOrUpdateModal.show();
     },
@@ -196,7 +196,7 @@ export default {
     },
     async onDelete(modal) {
       modal.preventDefault();
-      await this.deleteById({ id: this.currentGroupId });
+      await this.deleteById(this.currentId);
       if (
         this.items.length / this.CONSTANTS.ITEM_PER_PAGE ===
         this.currentPage - 1
@@ -204,20 +204,15 @@ export default {
         this.currentPage--;
       }
       this.$refs.deleteModal.hide();
-      this.$toaster.success(this.$i18n.t("groups.deleteGroupMess"));
+      this.$toaster.success("Delete Successfully!");
     },
     openCreateModal() {
       this.resetForm();
       this.$refs.createOrUpdateModal.show();
     },
-    async confirmDelete(groupId) {
-      this.currentGroupId = groupId;
-      await this.getListUsersByGroupId({
-        groupId: this.currentGroupId
-      });
-      if (this.listUsersByGroup.length === 0) {
-        this.$refs.deleteModal.show();
-      } else this.$toaster.error(this.$i18n.t("groups.errorDeleteGroupMess"));
+    async confirmDelete(id) {
+      this.currentId = id;
+      this.$refs.deleteModal.show();
     },
     resetForm() {
       this.itemInfo = {};
