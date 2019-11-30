@@ -62,8 +62,9 @@
     <!-- Create/Edit Info -->
     <b-modal
       ref="createOrUpdateModal"
-      title="CREATE NEW"
+      :title="!itemInfo.id? 'Create new': 'Update infomation'"
       @ok="handleCreateOk"
+      :ok-title="!itemInfo.id? 'Create': 'Update'"
       no-close-on-esc
       no-close-on-backdrop
     >
@@ -148,7 +149,7 @@ export default {
   computed: {
     ...mapState({
       items: state => state.license.items,
-      license: state => state.license.item
+      item: state => state.license.item
     }),
     countRow() {
       return;
@@ -188,7 +189,7 @@ export default {
     async showUpdateGroupModal(id) {
       this.resetForm();
       await this.getInfo(id);
-      this.itemInfo = { ...this.license };
+      this.itemInfo = { ...this.item };
       this.$refs.createOrUpdateModal.show();
     },
     async updateGroup() {
