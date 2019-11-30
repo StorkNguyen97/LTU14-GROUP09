@@ -7,6 +7,7 @@ const DefaultContainer = () => import("@/containers/DefaultContainer");
 // Views
 const License = () => import("@/views/License");
 const User = () => import("@/views/User");
+const Device = () => import("@/views/Device");
 
 // Views - Pages
 const Page404 = () => import("@/views/pages/Page404");
@@ -33,6 +34,11 @@ function configRoutes() {
           path: "user",
           name: "User",
           component: User
+        },
+        {
+          path: "device",
+          name: "Device",
+          component: Device
         }
       ]
     },
