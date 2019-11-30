@@ -11,27 +11,27 @@ const getters = {};
 
 // Actions
 const actions = {
-  getListLicenses: (context) => {
+  getList: (context) => {
     return axios.get(LICENSE_API).then(response => {
       context.commit("GET_LIST_GROUPS_SUCCESS", response);
     });
   },
-  getLicenseInfo: (context, params) => {
+  getById: (context, params) => {
     return axios.get(LICENSE_API, params).then(response => {
       context.commit("GET_GROUP_INFO_SUCCESS", response);
     });
   },
-  createNewLicense: (context, params) => {
+  add: (context, params) => {
     return axios.post(LICENSE_API, params).then(response => {
       context.commit("ADD_NEW_GROUP_SUCCESS", response);
     });
   },
-  updateLicenseInfo: (context, params) => {
+  update: (context, params) => {
     return axios.put(LICENSE_API, params).then(response => {
       context.commit("UPDATE_GROUP_INFO_SUCCESS", response);
     });
   },
-  deleteLicenseById: (context, params) => {
+  deleteById: (context, params) => {
     return axios.delete(LICENSE_API, params).then(() => {
       context.commit("DELETE_GROUP_BY_ID_SUCCESS", params);
     });
