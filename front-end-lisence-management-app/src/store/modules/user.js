@@ -1,11 +1,9 @@
 import axios from "@/plugin/axios";
-
+const USER_API = "/users";
 // Init state
 const state = {
-  users: [],
-  functions: [],
-  user: {},
-  usersByGroup: []
+  items: [],
+  item: {}
 };
 
 // Getters
@@ -13,80 +11,57 @@ const getters = {};
 
 // Actions
 const actions = {
-  getListUsers: (context, params) => {
-    return axios.get("user.index", params).then(response => {
-      context.commit("GET_LIST_USERS", response);
+  getList: context => {
+    return axios.get(USER_API).then(response => {
+      context.commit("GET_LIST_SUCCESS", response);
     });
   },
-  getListUsersByGroupId: (context, params) => {
-    return axios.get("group.user", params).then(response => {
-      context.commit("GET_LIST_USERS_BY_GROUP_ID", response);
+  getById: (context, params) => {
+    return axios.get(`${USER_API}/${params}`).then(response => {
+      context.commit("GET_INFO_SUCCESS", response);
     });
   },
-  getAllFunctions: (context, params) => {
-    return axios.get("user.functions", params).then(response => {
-      context.commit("GET_ALL_FUNCTIONS_SUCCESS", response);
+  add: (context, params) => {
+    return axios.post(USER_API, params).then(response => {
+      context.commit("ADD_NEW_SUCCESS", response);
     });
   },
-  getUserInfo: (context, params) => {
-    return axios.get("user.detail", params).then(response => {
-      context.commit("GET_USER_INFO_SUCCESS", response);
+  update: (context, params) => {
+    return axios.put(`${USER_API}/${params.id}`, params).then(response => {
+    context.commit("UPDATE_INFO_SUCCESS", response);
     });
   },
-  deleteUserById: (context, params) => {
-    return axios.delete("user.detail", params).then(() => {
-      context.commit("DELETE_USER_BY_ID_SUCCESS", params);
-    });
-  },
-  createNewUser: (context, params) => {
-    return axios.post("user.index", params).then(response => {
-      context.commit("ADD_NEW_USER_SUCCESS", response);
-    });
-  },
-  updateUserInfo: (context, params) => {
-    return axios.put("user.index", params).then(response => {
-      context.commit("UPDATE_USER_INFO_SUCCESS", response);
-    });
-  },
-  updateUserInfoAdmin: (context, params) => {
-    return axios.put("user.admin", params).then(response => {
-      context.commit("UPDATE_USER_INFO_SUCCESS", response);
+  deleteById: (context, params) => {
+    return axios.delete(`${USER_API}/${params}`).then(() => {
+      context.commit("DELETE_BY_ID_SUCCESS", params);
     });
   }
 };
 
 // Mutation
 const mutations = {
-  GET_LIST_USERS(state, users) {
-    state.users = users;
+  GET_LIST_SUCCESS(state, items) {
+    state.items = items;
   },
-  GET_LIST_USERS_BY_GROUP_ID(state, data) {
-    state.usersByGroup = data;
+  GET_INFO_SUCCESS(state, item) {
+    state.item = item;
   },
-  GET_ALL_FUNCTIONS_SUCCESS(state, functions) {
-    state.functions = functions;
+  ADD_NEW_SUCCESS(state, item) {
+    state.items.push(item);
   },
-  GET_USER_INFO_SUCCESS(state, user) {
-    state.user = user;
-  },
-  ADD_NEW_USER_SUCCESS(state, user) {
-    state.users.push(user);
-  },
-  UPDATE_USER_INFO_SUCCESS(state, user) {
-    user.createdAt = state.user.createdAt;
-    user.email = state.user.email;
-    function findUserIndex(element) {
-      return element.id === user.id;
+  UPDATE_INFO_SUCCESS(state, item) {
+    function findLicenseIndex(element) {
+      return element.id === item.id;
     }
-    const index = state.users.findIndex(findUserIndex);
-    state.users.splice(index, 1, user);
+    const index = state.items.findIndex(findLicenseIndex);
+    state.items.splice(index, 1, item);
   },
-  DELETE_USER_BY_ID_SUCCESS(state, params) {
-    function findUserIndex(element) {
+  DELETE_BY_ID_SUCCESS(state, params) {
+    function findLicenseIndex(element) {
       return element.id === params.id;
     }
-    const index = state.users.findIndex(findUserIndex);
-    state.users.splice(index, 1);
+    const index = state.items.findIndex(findLicenseIndex);
+    state.items.splice(index, 1);
   }
 };
 
