@@ -8,6 +8,7 @@ const DefaultContainer = () => import("@/containers/DefaultContainer");
 const License = () => import("@/views/License");
 const User = () => import("@/views/User");
 const Device = () => import("@/views/Device");
+const Software = () => import("@/views/Software");
 
 // Views - Pages
 const Page404 = () => import("@/views/pages/Page404");
@@ -39,6 +40,11 @@ function configRoutes() {
           path: "device",
           name: "Device",
           component: Device
+        },
+        {
+          path: "software",
+          name: "Software",
+          component: Software
         }
       ]
     },
