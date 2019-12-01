@@ -26,6 +26,12 @@
         <template slot="expriedDate" slot-scope="data">
           <span>{{ data.value | formatDateTime }}</span>
         </template>
+        <template slot="devices" slot-scope="data">
+          <span v-for="(item,index) in data.value" :key="index">
+            <span>{{ item.name }}</span>
+            <span v-if="index !== data.value.length -1">{{", "}}</span>
+          </span>
+        </template>
         <template slot="actions" slot-scope="row">
           <b-button
             variant="primary"
@@ -100,6 +106,23 @@
           class="validation-message text-danger"
         >{{ errors.first('expriedDate') }}</div>
       </b-form-group>
+      <b-form-group label="Device">
+        <v-select
+          v-model="itemInfo.devices"
+          multiple
+          taggable
+          :options="listDevices"
+          label="name"
+          name="devices"
+          placeholder="Select"
+          v-validate="'required'"
+          data-vv-as="Device"
+        />
+        <div
+          v-show="errors.has('devices')"
+          class="validation-message text-danger"
+        >{{ errors.first('devices') }}</div>
+      </b-form-group>
     </b-modal>
 
     <!-- Confirm Delete -->
@@ -121,6 +144,7 @@ export default {
   mounted: function() {
     this.$nextTick(function() {
       this.getList();
+      this.getListDevice();
     });
   },
   components: {},
@@ -149,15 +173,17 @@ export default {
   computed: {
     ...mapState({
       items: state => state.license.items,
-      item: state => state.license.item
+      item: state => state.license.item,
+      listDevices: state => state.device.items
     }),
     countRow() {
-      return;
+      return this.items.length;
     }
   },
   methods: {
     ...mapActions({
       getList: "license/getList",
+      getListDevice: "device/getList",
       createNew: "license/add",
       getInfo: "license/getById",
       updateInfo: "license/update",

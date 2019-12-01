@@ -11,6 +11,8 @@ import router from "./router";
 import store from "./store/index";
 import VeeValidate from "vee-validate";
 import Toaster from "v-toaster";
+import vSelect from "vue-select";
+import "vue-select/dist/vue-select.css";
 import VueCtkDateTimePicker from "vue-ctk-date-time-picker";
 import "vue-ctk-date-time-picker/dist/vue-ctk-date-time-picker.css";
 
@@ -29,6 +31,7 @@ Vue.filter("formatDateTime", formatDatetime);
 
 // Components
 Vue.component("VueCtkDateTimePicker", VueCtkDateTimePicker);
+Vue.component("v-select", vSelect);
 
 /* eslint-disable no-new */
 new Vue({

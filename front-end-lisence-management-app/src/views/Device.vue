@@ -23,6 +23,16 @@
         <template slot="role" slot-scope="data">
           <span>{{ data.value.name }}</span>
         </template>
+        <template slot="createdAt" slot-scope="data">
+          <span>{{ data.value | formatDateTime }}</span>
+        </template>
+        <template slot="status" slot-scope="data">
+          <b-badge :variant="data.value == 'ACTIVE' ? 'success' : 'secondary'">
+            {{
+            data.value == 'ACTIVE' ? 'ACTIVE' : 'INACTIVE'
+            }}
+          </b-badge>
+        </template>
         <template slot="actions" slot-scope="row">
           <b-button
             variant="primary"
@@ -68,34 +78,26 @@
       <b-form-group label="Key">
         <b-form-input
           maxlength="255"
-          v-model="itemInfo.key"
+          v-model="itemInfo.name"
           v-validate="'required'"
-          placeholder="Key"
-          name="key"
-          data-vv-as="Key"
+          placeholder="Name"
+          name="name"
+          data-vv-as="Name"
         ></b-form-input>
         <div
-          v-show="errors.has('key')"
+          v-show="errors.has('name')"
           class="validation-message text-danger"
-        >{{ errors.first('key') }}</div>
+        >{{ errors.first('name') }}</div>
       </b-form-group>
-      <b-form-group label="Expried Date">
-        <VueCtkDateTimePicker
-          v-model="itemInfo.expriedDate"
-          no-label
-          :noClearButton="true"
-          noHeader
-          name="expriedDate"
-          v-validate="'required'"
-          data-vv-as="Expried Date"
-          format="YYYY-MM-DD HH:mm:ss"
-          formatted="YYYY-MM-DD HH:mm:ss"
-          no-button
-        />
-        <div
-          v-show="errors.has('expriedDate')"
-          class="validation-message text-danger"
-        >{{ errors.first('expriedDate') }}</div>
+      <b-form-group label="Status">
+        <b-form-radio-group v-model="itemInfo.status" name="radio">
+          <b-form-radio v-bind:value="'ACTIVE'">
+            <b-badge variant="success">ACTIVE</b-badge>
+          </b-form-radio>
+          <b-form-radio v-bind:value="'INACTIVE'">
+            <b-badge variant="secondary">INACTIVE</b-badge>
+          </b-form-radio>
+        </b-form-radio-group>
       </b-form-group>
     </b-modal>
 
@@ -125,12 +127,11 @@ export default {
     return {
       fields: [
         { tdClass: "align-middle", key: "index", label: "#" },
-        { tdClass: "align-middle", key: "devicename" },
-        { tdClass: "align-middle", key: "email" },
-        { tdClass: "align-middle", key: "role" },
+        { tdClass: "align-middle", key: "name" },
+        { tdClass: "align-middle", key: "status" },
         {
           tdClass: "align-middle",
-          key: "devices"
+          key: "createdAt"
         },
         {
           thClass: "fixed-actions-col",
@@ -149,7 +150,7 @@ export default {
       item: state => state.device.item
     }),
     countRow() {
-      return;
+      return this.items.length;
     }
   },
   methods: {
@@ -214,6 +215,7 @@ export default {
     },
     resetForm() {
       this.itemInfo = {};
+      this.itemInfo.status = "ACTIVE";
     }
   }
 };

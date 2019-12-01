@@ -23,6 +23,9 @@
         <template slot="role" slot-scope="data">
           <span>{{ data.value.name }}</span>
         </template>
+        <template slot="devices" slot-scope="data">
+          <span v-for="(item,index) in data.value" :key="index">{{ item.name }}</span>
+        </template>
         <template slot="actions" slot-scope="row">
           <b-button
             variant="primary"
@@ -149,7 +152,7 @@ export default {
       item: state => state.user.item
     }),
     countRow() {
-      return;
+      return this.items.length;
     }
   },
   methods: {
