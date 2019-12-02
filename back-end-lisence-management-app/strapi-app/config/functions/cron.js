@@ -1,4 +1,5 @@
 'use strict';
+const {readInactiveLicenses} = require('./cron/readInactiveLicenses');
 
 /**
  * Cron config that gives you an opportunity
@@ -10,12 +11,17 @@
 
 module.exports = {
 
-  /**
-   * Simple example.
-   * Every monday at 1am.
-   */
+  // Send SMS Cronjob
 
-  // '0 1 * * 1': () => {
-  //
-  // }
+  '0 */1 * * * *': async () => {
+    // '*/15 * * * * *': async () => {
+
+    try {
+      strapi.log.info('Starting lisences cronjob');
+      readInactiveLicenses();
+    }
+    catch (e) {
+      strapi.log.info(`Error ${e.message}`);
+    }
+  },
 };

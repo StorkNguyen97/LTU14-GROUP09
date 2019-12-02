@@ -11,7 +11,6 @@
 // Public dependencies.
 const _ = require('lodash');
 const { convertRestQueryParams, buildQuery } = require('strapi-utils');
-
 module.exports = {
 
   /**
@@ -193,5 +192,25 @@ module.exports = {
       .skip(filters.start)
       .limit(filters.limit)
       .populate(populate);
-  }
+  },
+
+  generateLicense: async (values) => {
+    if (values.key || values.expriedDate) {
+      throw new Error('Invalid body');
+    }
+    values.key = ([1e7]+-1e3+-4e3+-8e3+-1e11).replace(/[018]/g,a=>(a^Math.random()*16>>a/4).toString(16));
+    const date = new Date();
+    date.setDate(date.getDate() + 1); 
+    values.expriedDate = date
+    values.isActive = true;
+    // Extract values related to relational data.
+    const relations = _.pick(values, License.associations.map(ast => ast.alias));
+    const data = _.omit(values, License.associations.map(ast => ast.alias));
+
+    // Create entry with no-relational data.
+    const entry = await License.create(data);
+
+    // Create relational data and return the entry.
+    return License.updateRelations({ _id: entry.id, values: relations });
+  },
 };

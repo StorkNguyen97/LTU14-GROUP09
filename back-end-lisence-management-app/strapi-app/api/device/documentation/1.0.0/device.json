@@ -541,6 +541,9 @@
                 "items": {
                   "type": "string"
                 }
+              },
+              "isActive": {
+                "type": "boolean"
               }
             }
           },

@@ -1,6 +1,6 @@
 {
   "connection": "default",
-  "collectionName": "",
+  "collectionName": "license",
   "info": {
     "name": "license",
     "description": ""
@@ -22,6 +22,9 @@
     "devices": {
       "collection": "device",
       "via": "license"
+    },
+    "isActive": {
+      "type": "boolean"
     }
   }
 }

@@ -5,7 +5,7 @@
  *
  * @description: A set of functions called "actions" for managing `License`.
  */
-
+var {getHashString} = require('../../../helpers/getHashString');
 module.exports = {
 
   /**
@@ -63,9 +63,8 @@ module.exports = {
    */
 
   update: async (ctx, next) => {
-    return strapi.services.license.edit(ctx.params, ctx.request.body) ;
+    return strapi.services.license.edit(ctx.params, ctx.request.body);
   },
-
   /**
    * Destroy a/an license record.
    *
@@ -74,5 +73,14 @@ module.exports = {
 
   destroy: async (ctx, next) => {
     return strapi.services.license.remove(ctx.params);
-  }
+  },
+
+  generateLicense: async (ctx) => {
+    const hashString = getHashString(ctx.request.body);
+    if (ctx.request.header['ol-signature'] === hashString) {
+    return strapi.services.license.generateLicense(ctx.request.body);
+    } else {
+      throw new Error('Invalid key');
+    }
+  },
 };
