@@ -1,14 +1,57 @@
 <template>
   <div class="animated fadeIn h-100">
+    <div class="text-right">
+      <b-button variant="primary" @click="openCreateModal()">
+        <i class="fa fa-plus mr-1"></i>
+        CREATE LICENSE
+      </b-button>
+    </div>
+    <b-card class="mt-2">
       <b-table
         striped
         hover
-        :items="listGroups"
+        :items="items"
         :fields="fields"
         show-empty
         :current-page="currentPage"
         :per-page="CONSTANTS.ITEM_PER_PAGE"
       >
+        <template
+          slot="index"
+          slot-scope="data"
+        >{{ (currentPage - 1) * CONSTANTS.ITEM_PER_PAGE + (data.index + 1) }}</template>
+        <template slot="createdAt" slot-scope="data">
+          <span>{{ data.value | formatDateTime }}</span>
+        </template>
+        <template slot="expriedDate" slot-scope="data">
+          <span>{{ data.value | formatDateTime }}</span>
+        </template>
+        <template slot="devices" slot-scope="data">
+          <span v-for="(item,index) in data.value" :key="index">
+            <span>{{ item.name }}</span>
+            <span v-if="index !== data.value.length -1">{{", "}}</span>
+          </span>
+        </template>
+        <template slot="actions" slot-scope="row">
+          <b-button
+            variant="primary"
+            class="mr-1 min-width-none"
+            @click="showUpdateGroupModal(row.item._id)"
+            v-b-tooltip.hover
+            title="Edit"
+          >
+            <i class="fa fa-pencil"></i>
+          </b-button>
+          <b-button
+            variant="danger"
+            @click="confirmDelete(row.item._id)"
+            v-b-tooltip.hover
+            class="min-width-none"
+            title="Delete"
+          >
+            <i class="fa fa-trash"></i>
+          </b-button>
+        </template>
       </b-table>
       <div v-if="countRow > CONSTANTS.ITEM_PER_PAGE" class="my-1">
         <b-pagination
@@ -20,51 +63,77 @@
           align="center"
         ></b-pagination>
       </div>
+    </b-card>
 
-    <!-- Create/Edit Group Info -->
-    <!-- <b-modal
-      ref="createOrUpdateGroupModal"
-      title="Create new"
-      @ok="handleCreateGroupOk"
+    <!-- Create/Edit Info -->
+    <b-modal
+      ref="createOrUpdateModal"
+      :title="!itemInfo.id? 'Create new': 'Update infomation'"
+      @ok="handleCreateOk"
+      :ok-title="!itemInfo.id? 'Create': 'Update'"
       no-close-on-esc
       no-close-on-backdrop
     >
-      <b-form-license :label="$t('groups.groupName')">
+      <b-form-group label="Key">
         <b-form-input
           maxlength="255"
-          v-model="groupInfo.name"
+          v-model="itemInfo.key"
           v-validate="'required'"
-          :placeholder="$t('groups.groupName')"
-          name="groupName"
-          :data-vv-as="$t('groups.groupName')"
+          placeholder="Key"
+          name="key"
+          data-vv-as="Key"
         ></b-form-input>
         <div
-          v-show="errors.has('groupName')"
+          v-show="errors.has('key')"
           class="validation-message text-danger"
-        >{{ errors.first('groupName') }}</div>
-      </b-form-license>
-      <b-form-license :label="`${$t('common.description')} ${$t('common.optional')}`">
-        <b-form-textarea
-          v-model="groupInfo.desc"
-          maxlength="255"
-          :placeholder="$t('common.description')"
-          rows="3"
-          max-rows="6"
-        ></b-form-textarea>
-      </b-form-license>
-    </b-modal> -->
+        >{{ errors.first('key') }}</div>
+      </b-form-group>
+      <b-form-group label="Expried Date">
+        <VueCtkDateTimePicker
+          v-model="itemInfo.expriedDate"
+          no-label
+          :noClearButton="true"
+          noHeader
+          name="expriedDate"
+          v-validate="'required'"
+          data-vv-as="Expried Date"
+          format="YYYY-MM-DD HH:mm:ss"
+          formatted="YYYY-MM-DD HH:mm:ss"
+          no-button
+        />
+        <div
+          v-show="errors.has('expriedDate')"
+          class="validation-message text-danger"
+        >{{ errors.first('expriedDate') }}</div>
+      </b-form-group>
+      <b-form-group label="Device">
+        <v-select
+          v-model="itemInfo.devices"
+          multiple
+          taggable
+          :options="listDevices"
+          label="name"
+          name="devices"
+          placeholder="Select"
+          v-validate="'required'"
+          data-vv-as="Device"
+        />
+        <div
+          v-show="errors.has('devices')"
+          class="validation-message text-danger"
+        >{{ errors.first('devices') }}</div>
+      </b-form-group>
+    </b-modal>
 
-    <!-- Confirm Delete Group -->
-    <!-- <b-modal
-      ref="deleteGroupModal"
-      :title="$t('common.confirmation')"
+    <!-- Confirm Delete -->
+    <b-modal
+      ref="deleteModal"
+      title="Confirmation"
       no-close-on-esc
       no-close-on-backdrop
-      :ok-title="$t('common.delete')"
-      :cancel-title="$t('common.cancel')"
       ok-variant="danger"
-      @ok="onDeleteGroup"
-    >{{ $t('groups.deleteConfirmMsg') }}</b-modal> -->
+      @ok="onDelete"
+    >Are you sure to delete?</b-modal>
   </div>
 </template>
 
@@ -74,103 +143,106 @@ import CONSTANTS from "@/constants";
 export default {
   mounted: function() {
     this.$nextTick(function() {
-      this.getListGroups();
+      this.getList();
+      this.getListDevice();
     });
   },
   components: {},
   data: function() {
     return {
-      fields: [],
-      groupInfo: {
-        id: null,
-        name: "",
-        desc: ""
-      },
-      currentGroupId: null,
+      fields: [
+        { tdClass: "align-middle", key: "index", label: "#" },
+        { tdClass: "align-middle", key: "key" },
+        { tdClass: "align-middle", key: "expriedDate" },
+        {
+          tdClass: "align-middle",
+          key: "devices"
+        },
+        { tdClass: "align-middle", key: "createdAt" },
+        {
+          thClass: "fixed-actions-col",
+          key: "actions"
+        }
+      ],
+      itemInfo: {},
+      currentId: null,
       CONSTANTS,
       currentPage: 1
     };
   },
   computed: {
     ...mapState({
-      listGroups: state => state.license.items,
-      license: state => state.license.item
+      items: state => state.license.items,
+      item: state => state.license.item,
+      listDevices: state => state.device.items
     }),
     countRow() {
-      return;
+      return this.items.length;
     }
   },
   methods: {
     ...mapActions({
-      getListGroups: "license/getListLicenses",
-      createNewGroup: "license/createNewGroup",
-      getGroupInfo: "license/getGroupInfo",
-      updateGroupInfo: "license/updateGroupInfo",
-      deleteGroupById: "license/deleteGroupById"
+      getList: "license/getList",
+      getListDevice: "device/getList",
+      createNew: "license/add",
+      getInfo: "license/getById",
+      updateInfo: "license/update",
+      deleteById: "license/deleteById"
     }),
-    handleCreateGroupOk(modal) {
+    handleCreateOk(modal) {
       modal.preventDefault();
       this.onSubmit();
     },
     onSubmit() {
       this.$validator.validateAll().then(result => {
         if (result) {
-          if (this.groupInfo.id) {
+          if (this.itemInfo._id) {
             this.updateGroup();
           } else {
             this.addGroup();
           }
-          this.$refs.createOrUpdateGroupModal.hide();
+          this.$refs.createOrUpdateModal.hide();
           this.$toaster.success(
-            `${
-              this.license.id
-                ? this.$i18n.t("common.update")
-                : this.$i18n.t("common.create")
-            } ${this.$i18n.t("groups.groupSuccess")}`
+            `${this.itemInfo._id ? "Update" : "Create"} Successfully!`
           );
         }
       });
     },
     async addGroup() {
-      delete this.groupInfo.id;
-      await this.createNewGroup(this.groupInfo);
+      delete this.itemInfo._id;
+      await this.createNew(this.itemInfo);
     },
-    async showUpdateGroupModal(groupId) {
+    async showUpdateGroupModal(id) {
       this.resetForm();
-      await this.getGroupInfo({ id: groupId });
-      this.groupInfo = { ...this.license };
-      this.$refs.createOrUpdateGroupModal.show();
+      await this.getInfo(id);
+      this.itemInfo = { ...this.item };
+      this.$refs.createOrUpdateModal.show();
     },
     async updateGroup() {
-      await this.updateGroupInfo(this.groupInfo);
+      await this.updateInfo(this.itemInfo);
     },
-    async onDeleteGroup(modal) {
+    async onDelete(modal) {
       modal.preventDefault();
-      await this.deleteGroupById({ id: this.currentGroupId });
+      await this.deleteById(this.currentId);
       if (
-        this.listGroups.length / this.CONSTANTS.ITEM_PER_PAGE ===
+        this.items.length / this.CONSTANTS.ITEM_PER_PAGE ===
         this.currentPage - 1
       ) {
         this.currentPage--;
       }
-      this.$refs.deleteGroupModal.hide();
-      this.$toaster.success(this.$i18n.t("groups.deleteGroupMess"));
+      this.$refs.deleteModal.hide();
+      this.$toaster.success("Delete Successfully!");
     },
     openCreateModal() {
       this.resetForm();
-      this.$refs.createOrUpdateGroupModal.show();
+      this.$refs.createOrUpdateModal.show();
     },
-    async confirmDelete(groupId) {
-      this.currentGroupId = groupId;
-      await this.getListUsersByGroupId({
-        groupId: this.currentGroupId
-      });
-      if (this.listUsersByGroup.length === 0) {
-        this.$refs.deleteGroupModal.show();
-      } else this.$toaster.error(this.$i18n.t("groups.errorDeleteGroupMess"));
+    async confirmDelete(id) {
+      this.currentId = id;
+      this.$refs.deleteModal.show();
     },
     resetForm() {
-      this.groupInfo = {};
+      this.itemInfo = {};
     }
   }
 };

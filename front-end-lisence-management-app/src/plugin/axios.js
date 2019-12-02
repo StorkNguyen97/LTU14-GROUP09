@@ -8,8 +8,10 @@ const axios = Axios.create({
 });
 
 setCommonAuthorizationToken(
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGNmYzQ5ZmE0OTJjNTAxNjU3ZDhmMWQiLCJpYXQiOjE1NzM5NTc0ODYsImV4cCI6MTU3NjU0OTQ4Nn0.ytBvqCudSZ1H9VV6ZY0ook1N1GBlyvcncVh_9g1x8zg"
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGRmZWIxMTI5YzhjNzAwMGVlZTFkMWYiLCJpYXQiOjE1NzQ5NTU4MTQsImV4cCI6MTU3NzU0NzgxNH0.ksFyLjEBZ8httyk566o2bsDTg0C722mUdb0347LsK4A"
 );
+
+axios.defaults.headers.common['Content-Type'] = 'application/json';
 
 axios.interceptors.request.use(
   config => {
