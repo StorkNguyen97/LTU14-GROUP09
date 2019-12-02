@@ -1,5 +1,6 @@
 import _ from "lodash";
 import axios from "@/plugin/axios";
+const AUTH_API = "/auth/local";
 
 const state = {
   currentUser: localStorage.getItem("currentUser")
@@ -8,13 +9,13 @@ const state = {
 };
 
 const getters = {
-  isAuthenticated: state => !!_.get(state, "currentUser.id"),
+  isAuthenticated: state => !!_.get(state, "currentUser.user._id"),
   currentUser: state => state.currentUser
 };
 
 const actions = {
   actionLogin: (context, params) => {
-    return axios.post("auth.login", params).then(response => {
+    return axios.post(AUTH_API, params).then(response => {
       context.commit("LOGIN_SUCCESS", response);
     });
   },
@@ -23,16 +24,16 @@ const actions = {
       context.commit("LOGOUT_SUCCESS");
       resolve();
     });
-  },
-  getCurrentUserDetail: context => {
-    return axios
-      .get("user.detail", {
-        id: state.currentUser.userId
-      })
-      .then(response => {
-        context.commit("UPDATE_CURRENT_USER_DETAIL_STATE", response);
-      });
   }
+  // getCurrentUserDetail: context => {
+  //   return axios
+  //     .get("user.detail", {
+  //       id: state.currentUser.userId
+  //     })
+  //     .then(response => {
+  //       context.commit("UPDATE_CURRENT_USER_DETAIL_STATE", response);
+  //     });
+  // }
 };
 
 const mutations = {
