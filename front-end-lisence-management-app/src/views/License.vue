@@ -26,6 +26,9 @@
         <template slot="expriedDate" slot-scope="data">
           <span>{{ data.value | formatDateTime }}</span>
         </template>
+        <template slot="software" slot-scope="data">
+          <span>{{ data.value.name }}</span>
+        </template>
         <template slot="devices" slot-scope="data">
           <span v-for="(item,index) in data.value" :key="index">
             <span>{{ item.name }}</span>
@@ -123,6 +126,22 @@
           class="validation-message text-danger"
         >{{ errors.first('devices') }}</div>
       </b-form-group>
+      <b-form-group label="Software">
+        <v-select
+          v-model="itemInfo.software"
+          taggable
+          :options="listSoftwares"
+          label="name"
+          name="software"
+          placeholder="Select"
+          v-validate="'required'"
+          data-vv-as="Software"
+        />
+        <div
+          v-show="errors.has('software')"
+          class="validation-message text-danger"
+        >{{ errors.first('software') }}</div>
+      </b-form-group>
     </b-modal>
 
     <!-- Confirm Delete -->
@@ -145,6 +164,7 @@ export default {
     this.$nextTick(function() {
       this.getList();
       this.getListDevice();
+      this.getListSoftware();
     });
   },
   components: {},
@@ -157,6 +177,10 @@ export default {
         {
           tdClass: "align-middle",
           key: "devices"
+        },
+        {
+          tdClass: "align-middle",
+          key: "software"
         },
         { tdClass: "align-middle", key: "createdAt" },
         {
@@ -174,7 +198,8 @@ export default {
     ...mapState({
       items: state => state.license.items,
       item: state => state.license.item,
-      listDevices: state => state.device.items
+      listDevices: state => state.device.items,
+      listSoftwares: state => state.software.items
     }),
     countRow() {
       return this.items.length;
@@ -184,6 +209,7 @@ export default {
     ...mapActions({
       getList: "license/getList",
       getListDevice: "device/getList",
+      getListSoftware: "software/getList",
       createNew: "license/add",
       getInfo: "license/getById",
       updateInfo: "license/update",
