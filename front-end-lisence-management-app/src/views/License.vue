@@ -29,6 +29,9 @@
         <template slot="software" slot-scope="data">
           <span>{{ data.value.name }}</span>
         </template>
+        <template slot="isActive" slot-scope="data">
+          <span>{{ data.value }}</span>
+        </template>
         <template slot="devices" slot-scope="data">
           <span v-for="(item,index) in data.value" :key="index">
             <span>{{ item.name }}</span>
@@ -77,38 +80,6 @@
       no-close-on-esc
       no-close-on-backdrop
     >
-      <b-form-group label="Key">
-        <b-form-input
-          maxlength="255"
-          v-model="itemInfo.key"
-          v-validate="'required'"
-          placeholder="Key"
-          name="key"
-          data-vv-as="Key"
-        ></b-form-input>
-        <div
-          v-show="errors.has('key')"
-          class="validation-message text-danger"
-        >{{ errors.first('key') }}</div>
-      </b-form-group>
-      <b-form-group label="Expried Date">
-        <VueCtkDateTimePicker
-          v-model="itemInfo.expriedDate"
-          no-label
-          :noClearButton="true"
-          noHeader
-          name="expriedDate"
-          v-validate="'required'"
-          data-vv-as="Expried Date"
-          format="YYYY-MM-DD HH:mm:ss"
-          formatted="YYYY-MM-DD HH:mm:ss"
-          no-button
-        />
-        <div
-          v-show="errors.has('expriedDate')"
-          class="validation-message text-danger"
-        >{{ errors.first('expriedDate') }}</div>
-      </b-form-group>
       <b-form-group label="Device">
         <v-select
           v-model="itemInfo.devices"
@@ -181,6 +152,10 @@ export default {
         {
           tdClass: "align-middle",
           key: "software"
+        },
+        {
+          tdClass: "align-middle",
+          key: "isActive"
         },
         { tdClass: "align-middle", key: "createdAt" },
         {

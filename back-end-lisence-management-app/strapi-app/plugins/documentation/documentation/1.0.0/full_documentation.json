@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "12/01/2019 2:55:04 PM"
+    "x-generation-date": "12/02/2019 4:40:21 AM"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -3697,34 +3697,6 @@
           "name": {
             "type": "string"
           },
-          "license": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "key": {
-                "type": "string"
-              },
-              "expriedDate": {
-                "type": "string"
-              },
-              "software": {
-                "type": "string"
-              },
-              "devices": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "isActive": {
-                "type": "boolean"
-              }
-            }
-          },
           "status": {
             "type": "string"
           },
@@ -3769,6 +3741,37 @@
                 }
               }
             }
+          },
+          "licenses": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "key": {
+                  "type": "string"
+                },
+                "expriedDate": {
+                  "type": "string"
+                },
+                "software": {
+                  "type": "string"
+                },
+                "devices": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "isActive": {
+                  "type": "boolean"
+                }
+              }
+            }
           }
         }
       },
@@ -3777,14 +3780,17 @@
           "name": {
             "type": "string"
           },
-          "license": {
-            "type": "string"
-          },
           "status": {
             "type": "string"
           },
           "user": {
             "type": "string"
+          },
+          "licenses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       },
@@ -3834,14 +3840,17 @@
                 "name": {
                   "type": "string"
                 },
-                "license": {
-                  "type": "string"
-                },
                 "status": {
                   "type": "string"
                 },
                 "user": {
                   "type": "string"
+                },
+                "licenses": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }
@@ -4174,14 +4183,17 @@
                 "name": {
                   "type": "string"
                 },
-                "license": {
-                  "type": "string"
-                },
                 "status": {
                   "type": "string"
                 },
                 "user": {
                   "type": "string"
+                },
+                "licenses": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }

@@ -21,7 +21,8 @@
     },
     "devices": {
       "collection": "device",
-      "via": "license"
+      "via": "licenses",
+      "dominant": true
     },
     "isActive": {
       "type": "boolean"

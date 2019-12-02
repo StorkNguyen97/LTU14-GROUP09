@@ -519,34 +519,6 @@
           "name": {
             "type": "string"
           },
-          "license": {
-            "required": [
-              "id"
-            ],
-            "properties": {
-              "id": {
-                "type": "string"
-              },
-              "key": {
-                "type": "string"
-              },
-              "expriedDate": {
-                "type": "string"
-              },
-              "software": {
-                "type": "string"
-              },
-              "devices": {
-                "type": "array",
-                "items": {
-                  "type": "string"
-                }
-              },
-              "isActive": {
-                "type": "boolean"
-              }
-            }
-          },
           "status": {
             "type": "string"
           },
@@ -591,6 +563,37 @@
                 }
               }
             }
+          },
+          "licenses": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "key": {
+                  "type": "string"
+                },
+                "expriedDate": {
+                  "type": "string"
+                },
+                "software": {
+                  "type": "string"
+                },
+                "devices": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "isActive": {
+                  "type": "boolean"
+                }
+              }
+            }
           }
         }
       },
@@ -599,14 +602,17 @@
           "name": {
             "type": "string"
           },
-          "license": {
-            "type": "string"
-          },
           "status": {
             "type": "string"
           },
           "user": {
             "type": "string"
+          },
+          "licenses": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }

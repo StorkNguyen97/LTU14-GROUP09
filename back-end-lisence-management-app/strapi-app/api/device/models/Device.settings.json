@@ -12,10 +12,6 @@
     "name": {
       "type": "string"
     },
-    "license": {
-      "model": "license",
-      "via": "devices"
-    },
     "status": {
       "type": "string"
     },
@@ -23,6 +19,10 @@
       "model": "user",
       "via": "devices",
       "plugin": "users-permissions"
+    },
+    "licenses": {
+      "collection": "license",
+      "via": "devices"
     }
   }
 }

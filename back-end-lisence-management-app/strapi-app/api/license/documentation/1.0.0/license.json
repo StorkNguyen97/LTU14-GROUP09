@@ -625,14 +625,17 @@
                 "name": {
                   "type": "string"
                 },
-                "license": {
-                  "type": "string"
-                },
                 "status": {
                   "type": "string"
                 },
                 "user": {
                   "type": "string"
+                },
+                "licenses": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }

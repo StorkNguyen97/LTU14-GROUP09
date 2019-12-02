@@ -1,5 +1,6 @@
 import axios from "@/plugin/axios";
 const LICENSE_API = "/licenses";
+import {getHashSignature} from '../../helpers/getHashSignature.js';
 // Init state
 const state = {
   items: [],
@@ -22,13 +23,21 @@ const actions = {
     });
   },
   add: (context, params) => {
-    return axios.post(LICENSE_API, params).then(response => {
-      context.commit("ADD_NEW_SUCCESS", response);
-    });
+    return axios.request({
+      method: 'POST',
+      url: `${LICENSE_API}/generate`,
+      headers: {
+        "ol-signature": getHashSignature(params),
+      },
+      data: params
+    })
+      .then(response => {
+        context.commit("ADD_NEW_SUCCESS", response);
+      })
   },
   update: (context, params) => {
     return axios.put(`${LICENSE_API}/${params.id}`, params).then(response => {
-    context.commit("UPDATE_INFO_SUCCESS", response);
+      context.commit("UPDATE_INFO_SUCCESS", response);
     });
   },
   deleteById: (context, params) => {

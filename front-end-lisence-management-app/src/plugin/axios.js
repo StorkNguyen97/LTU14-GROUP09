@@ -52,7 +52,7 @@ export default axios;
 export function setCommonAuthorizationToken(jwt) {
   if (!jwt) return;
   localStorage.jwt = jwt;
-  axios.defaults.headers.common.Authorization = "Bearer " + jwt;
+  // axios.defaults.headers.common.Authorization = "Bearer " + jwt;licenses
 }
 
 export function removeCommonAuthorizationToken() {

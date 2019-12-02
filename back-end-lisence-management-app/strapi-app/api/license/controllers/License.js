@@ -76,6 +76,7 @@ module.exports = {
   },
 
   generateLicense: async (ctx) => {
+    console.log('ok')
     const hashString = getHashString(ctx.request.body);
     if (ctx.request.header['ol-signature'] === hashString) {
     return strapi.services.license.generateLicense(ctx.request.body);
