@@ -14,11 +14,6 @@ export default {
       name: "Software",
       url: "/software",
       icon: "fa fa-th"
-    },
-    {
-      name: "Device",
-      url: "/device",
-      icon: "fa fa-laptop"
     }
   ]
 };

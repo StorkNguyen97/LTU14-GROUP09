@@ -24,7 +24,10 @@
           <span>{{ data.value.name }}</span>
         </template>
         <template slot="devices" slot-scope="data">
-          <span v-for="(item,index) in data.value" :key="index">{{ item.name }}</span>
+          <span v-for="(item,index) in data.value" :key="index">
+            <span>{{ item.name }}</span>
+            <span v-if="index !== data.value.length -1">{{", "}}</span>
+          </span>
         </template>
         <template slot="actions" slot-scope="row">
           <b-button
@@ -62,43 +65,57 @@
     <!-- Create/Edit Info -->
     <b-modal
       ref="createOrUpdateModal"
-      :title="!itemInfo.id? 'Create new': 'Update infomation'"
+      :title="!itemInfo._id? 'Create new': 'Update infomation'"
       @ok="handleCreateOk"
-      :ok-title="!itemInfo.id? 'Create': 'Update'"
+      :ok-title="!itemInfo._id? 'Create': 'Update'"
       no-close-on-esc
       no-close-on-backdrop
     >
-      <b-form-group label="Key">
+      <b-form-group label="User Name">
         <b-form-input
           maxlength="255"
-          v-model="itemInfo.key"
+          v-model="itemInfo.username"
           v-validate="'required'"
-          placeholder="Key"
-          name="key"
-          data-vv-as="Key"
+          placeholder="User Name"
+          name="userName"
+          data-vv-as="User Name"
         ></b-form-input>
         <div
-          v-show="errors.has('key')"
+          v-show="errors.has('userName')"
           class="validation-message text-danger"
-        >{{ errors.first('key') }}</div>
+        >{{ errors.first('userName') }}</div>
       </b-form-group>
-      <b-form-group label="Expried Date">
-        <VueCtkDateTimePicker
-          v-model="itemInfo.expriedDate"
-          no-label
-          :noClearButton="true"
-          noHeader
-          name="expriedDate"
+      <b-form-group label="Email">
+        <b-form-input
+          type="email"
+          maxlength="255"
+          v-model="itemInfo.email"
           v-validate="'required'"
-          data-vv-as="Expried Date"
-          format="YYYY-MM-DD HH:mm:ss"
-          formatted="YYYY-MM-DD HH:mm:ss"
-          no-button
+          placeholder="Email"
+          name="email"
+          data-vv-as="Email"
+        ></b-form-input>
+        <div
+          v-show="errors.has('email')"
+          class="validation-message text-danger"
+        >{{ errors.first('email') }}</div>
+      </b-form-group>
+      <b-form-group label="Password">
+        <b-form-input type="password" maxlength="255" v-model="itemInfo.password"></b-form-input>
+      </b-form-group>
+      <b-form-group label="Role">
+        <v-select
+          v-model="itemInfo.role"
+          :options="['Administrator','Authenticated']"
+          name="role"
+          placeholder="Select"
+          v-validate="'required'"
+          data-vv-as="Role"
         />
         <div
-          v-show="errors.has('expriedDate')"
+          v-show="errors.has('role')"
           class="validation-message text-danger"
-        >{{ errors.first('expriedDate') }}</div>
+        >{{ errors.first('role') }}</div>
       </b-form-group>
     </b-modal>
 
@@ -131,10 +148,6 @@ export default {
         { tdClass: "align-middle", key: "username" },
         { tdClass: "align-middle", key: "email" },
         { tdClass: "align-middle", key: "role" },
-        {
-          tdClass: "align-middle",
-          key: "devices"
-        },
         {
           thClass: "fixed-actions-col",
           key: "actions"

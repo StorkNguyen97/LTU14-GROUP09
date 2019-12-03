@@ -7,7 +7,6 @@ const DefaultContainer = () => import("@/containers/DefaultContainer");
 // Views
 const License = () => import("@/views/License");
 const User = () => import("@/views/User");
-const Device = () => import("@/views/Device");
 const Software = () => import("@/views/Software");
 
 // Views - Pages
@@ -17,25 +16,25 @@ const Login = () => import("@/views/pages/Login");
 const Register = () => import("@/views/pages/Register");
 
 // VueX store
-import store from '../store';
+import store from "../store";
 
 Vue.use(Router);
 
 // Before enter functions
 const ifNotAuthenticated = (to, from, next) => {
-  if (!store.getters['auth/isAuthenticated']) {
-      next();
-      return;
+  if (!store.getters["auth/isAuthenticated"]) {
+    next();
+    return;
   }
-  next('/');
+  next("/");
 };
 
 const ifAuthenticated = (to, from, next) => {
-  if (store.getters['auth/isAuthenticated']) {
-      next();
-      return;
+  if (store.getters["auth/isAuthenticated"]) {
+    next();
+    return;
   }
-  next('/login');
+  next("/login");
 };
 
 function configRoutes() {
@@ -67,12 +66,6 @@ function configRoutes() {
           path: "user",
           name: "User",
           component: User,
-          beforeEnter: ifAuthenticated
-        },
-        {
-          path: "device",
-          name: "Device",
-          component: Device,
           beforeEnter: ifAuthenticated
         },
         {

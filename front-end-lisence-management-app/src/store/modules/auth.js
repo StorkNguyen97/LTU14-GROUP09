@@ -25,15 +25,6 @@ const actions = {
       resolve();
     });
   }
-  // getCurrentUserDetail: context => {
-  //   return axios
-  //     .get("user.detail", {
-  //       id: state.currentUser.userId
-  //     })
-  //     .then(response => {
-  //       context.commit("UPDATE_CURRENT_USER_DETAIL_STATE", response);
-  //     });
-  // }
 };
 
 const mutations = {
