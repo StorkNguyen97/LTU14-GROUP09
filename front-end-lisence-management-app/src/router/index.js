@@ -33,6 +33,7 @@ const ifNotAuthenticated = (to, from, next) => {
 
 const ifAuthenticated = (to, from, next) => {
   if (store.getters["auth/isAuthenticated"]) {
+    console.log('store', store.getters["auth/currentUser"])
     next();
     return;
   }
@@ -51,6 +52,12 @@ function configRoutes() {
       path: "*",
       name: "Page404",
       component: Page404
+    },
+    {
+      path: "/user/software",
+      name: "UserSoftware",
+      component: UserSoftware,
+      beforeEnter: ifAuthenticated
     },
     {
       path: "/",
@@ -77,12 +84,6 @@ function configRoutes() {
           beforeEnter: ifAuthenticated
 
         },
-        {
-          path: "user/software",
-          name: "UserSoftware",
-          component: UserSoftware,
-          beforeEnter: ifAuthenticated
-        }
       ]
     },
     {
