@@ -9,6 +9,8 @@ const License = () => import("@/views/License");
 const User = () => import("@/views/User");
 const Device = () => import("@/views/Device");
 const Software = () => import("@/views/Software");
+const UserSoftware = () => import("@/views/UserSoftware");
+
 
 // Views - Pages
 const Page404 = () => import("@/views/pages/Page404");
@@ -45,6 +47,11 @@ function configRoutes() {
           path: "software",
           name: "Software",
           component: Software
+        },
+        {
+          path: "user/software",
+          name: "UserSoftware",
+          component: UserSoftware
         }
       ]
     },

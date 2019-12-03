@@ -1,11 +1,5 @@
 <template>
   <div class="animated fadeIn h-100">
-    <div class="text-right">
-      <b-button variant="primary" @click="openCreateModal()">
-        <i class="fa fa-plus mr-1"></i>
-        CREATE SOFTWARE
-      </b-button>
-    </div>
     <b-card class="mt-2">
       <b-table
         striped
@@ -20,12 +14,16 @@
           slot="index"
           slot-scope="data"
         >{{ (currentPage - 1) * CONSTANTS.ITEM_PER_PAGE + (data.index + 1) }}</template>
-        <template slot="createdAt" slot-scope="data">
-          <span>{{ data.value | formatDateTime }}</span>
+        <template slot="software" slot-scope="data">
+          <span>{{ data.value.name }}</span>
         </template>
         <template slot="licenses" slot-scope="data">
-            <span>{{ data.value.length }}</span>
+          <span>{{ data.value }}</span>
         </template>
+        <template slot="expriedDate" slot-scope="data">
+          <span>{{ data.value | formatDateTime }}</span>
+        </template>
+
         <template slot="actions" slot-scope="row">
           <b-button
             variant="primary"
@@ -102,7 +100,7 @@ import CONSTANTS from "@/constants";
 export default {
   mounted: function() {
     this.$nextTick(function() {
-      this.getList();
+      this.getList("?user=5de484f645073a000de4e89f");
     });
   },
   components: {},
@@ -110,14 +108,14 @@ export default {
     return {
       fields: [
         { tdClass: "align-middle", key: "index", label: "#" },
-        { tdClass: "align-middle", key: "name" },
+        { tdClass: "align-middle", key: "software" },
         {
           tdClass: "align-middle",
-          key: "licenses"
+          key: "key"
         },
         {
           tdClass: "align-middle",
-          key: "createdAt"
+          key: "expriedDate"
         },
         {
           thClass: "fixed-actions-col",
@@ -132,8 +130,8 @@ export default {
   },
   computed: {
     ...mapState({
-      items: state => state.software.items,
-      item: state => state.software.item
+      items: state => state.license.items,
+      item: state => state.license.item
     }),
     countRow() {
       return this.items.length;
@@ -141,7 +139,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      getList: "software/getList",
+      getList: "license/getListByFilter",
       createNew: "software/add",
       getInfo: "software/getById",
       updateInfo: "software/update",

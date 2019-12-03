@@ -29,6 +29,9 @@
         <template slot="software" slot-scope="data">
           <span>{{ data.value.name }}</span>
         </template>
+        <template slot="user" slot-scope="data">
+          <span>{{ data.value.username }}</span>
+        </template>
         <template slot="isActive" slot-scope="data">
           <span>{{ data.value }}</span>
         </template>
@@ -113,6 +116,22 @@
           class="validation-message text-danger"
         >{{ errors.first('software') }}</div>
       </b-form-group>
+      <b-form-group label="User">
+        <v-select
+          v-model="itemInfo.user"
+          taggable
+          :options="listUsers"
+          label="username"
+          name="user"
+          placeholder="Select"
+          v-validate="'required'"
+          data-vv-as="User"
+        />
+        <div
+          v-show="errors.has('user')"
+          class="validation-message text-danger"
+        >{{ errors.first('user') }}</div>
+      </b-form-group>
     </b-modal>
 
     <!-- Confirm Delete -->
@@ -136,6 +155,7 @@ export default {
       this.getList();
       this.getListDevice();
       this.getListSoftware();
+      this.getListUser();
     });
   },
   components: {},
@@ -152,6 +172,10 @@ export default {
         {
           tdClass: "align-middle",
           key: "software"
+        },
+        {
+          tdClass: "align-middle",
+          key: "user"
         },
         {
           tdClass: "align-middle",
@@ -174,7 +198,8 @@ export default {
       items: state => state.license.items,
       item: state => state.license.item,
       listDevices: state => state.device.items,
-      listSoftwares: state => state.software.items
+      listSoftwares: state => state.software.items,
+      listUsers: state => state.user.items
     }),
     countRow() {
       return this.items.length;
@@ -185,6 +210,7 @@ export default {
       getList: "license/getList",
       getListDevice: "device/getList",
       getListSoftware: "software/getList",
+      getListUser: "user/getList",
       createNew: "license/add",
       getInfo: "license/getById",
       updateInfo: "license/update",
