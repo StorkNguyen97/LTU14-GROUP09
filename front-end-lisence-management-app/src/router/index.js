@@ -7,7 +7,6 @@ const DefaultContainer = () => import("@/containers/DefaultContainer");
 // Views
 const License = () => import("@/views/License");
 const User = () => import("@/views/User");
-const Device = () => import("@/views/Device");
 const Software = () => import("@/views/Software");
 const UserSoftware = () => import("@/views/UserSoftware");
 
@@ -18,10 +17,41 @@ const Page500 = () => import("@/views/pages/Page500");
 const Login = () => import("@/views/pages/Login");
 const Register = () => import("@/views/pages/Register");
 
+// VueX store
+import store from "../store";
+
 Vue.use(Router);
+
+// Before enter functions
+const ifNotAuthenticated = (to, from, next) => {
+  if (!store.getters["auth/isAuthenticated"]) {
+    next();
+    return;
+  }
+  next("/");
+};
+
+const ifAuthenticated = (to, from, next) => {
+  if (store.getters["auth/isAuthenticated"]) {
+    next();
+    return;
+  }
+  next("/login");
+};
 
 function configRoutes() {
   return [
+    {
+      path: "/login",
+      name: "Login",
+      component: Login,
+      beforeEnter: ifNotAuthenticated
+    },
+    {
+      path: "*",
+      name: "Page404",
+      component: Page404
+    },
     {
       path: "/",
       redirect: "/license",
@@ -31,27 +61,27 @@ function configRoutes() {
         {
           path: "license",
           name: "License",
-          component: License
+          component: License,
+          beforeEnter: ifAuthenticated
         },
         {
           path: "user",
           name: "User",
-          component: User
-        },
-        {
-          path: "device",
-          name: "Device",
-          component: Device
+          component: User,
+          beforeEnter: ifAuthenticated
         },
         {
           path: "software",
           name: "Software",
-          component: Software
+          component: Software,
+          beforeEnter: ifAuthenticated
+
         },
         {
           path: "user/software",
           name: "UserSoftware",
-          component: UserSoftware
+          component: UserSoftware,
+          beforeEnter: ifAuthenticated
         }
       ]
     },
@@ -66,20 +96,11 @@ function configRoutes() {
       },
       children: [
         {
-          path: "404",
-          name: "Page404",
-          component: Page404
-        },
-        {
           path: "500",
           name: "Page500",
           component: Page500
         },
-        {
-          path: "login",
-          name: "Login",
-          component: Login
-        },
+
         {
           path: "register",
           name: "Register",

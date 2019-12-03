@@ -33,7 +33,11 @@
           <span>{{ data.value.username }}</span>
         </template>
         <template slot="isActive" slot-scope="data">
-          <span>{{ data.value }}</span>
+          <b-badge :variant="data.value ? 'success' : 'secondary'">
+            {{
+            data.value ? 'ACTIVE' : 'INACTIVE'
+            }}
+          </b-badge>
         </template>
         <template slot="devices" slot-scope="data">
           <span v-for="(item,index) in data.value" :key="index">
@@ -83,23 +87,6 @@
       no-close-on-esc
       no-close-on-backdrop
     >
-      <b-form-group label="Device">
-        <v-select
-          v-model="itemInfo.devices"
-          multiple
-          taggable
-          :options="listDevices"
-          label="name"
-          name="devices"
-          placeholder="Select"
-          v-validate="'required'"
-          data-vv-as="Device"
-        />
-        <div
-          v-show="errors.has('devices')"
-          class="validation-message text-danger"
-        >{{ errors.first('devices') }}</div>
-      </b-form-group>
       <b-form-group label="Software">
         <v-select
           v-model="itemInfo.software"
@@ -153,7 +140,6 @@ export default {
   mounted: function() {
     this.$nextTick(function() {
       this.getList();
-      this.getListDevice();
       this.getListSoftware();
       this.getListUser();
     });
@@ -165,10 +151,6 @@ export default {
         { tdClass: "align-middle", key: "index", label: "#" },
         { tdClass: "align-middle", key: "key" },
         { tdClass: "align-middle", key: "expriedDate" },
-        {
-          tdClass: "align-middle",
-          key: "devices"
-        },
         {
           tdClass: "align-middle",
           key: "software"
@@ -197,9 +179,8 @@ export default {
     ...mapState({
       items: state => state.license.items,
       item: state => state.license.item,
-      listDevices: state => state.device.items,
-      listSoftwares: state => state.software.items,
-      listUsers: state => state.user.items
+      listUsers: state => state.user.items,
+      listSoftwares: state => state.software.items
     }),
     countRow() {
       return this.items.length;
@@ -208,7 +189,6 @@ export default {
   methods: {
     ...mapActions({
       getList: "license/getList",
-      getListDevice: "device/getList",
       getListSoftware: "software/getList",
       getListUser: "user/getList",
       createNew: "license/add",

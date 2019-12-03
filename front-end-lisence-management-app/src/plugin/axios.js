@@ -8,10 +8,12 @@ const axios = Axios.create({
 });
 
 setCommonAuthorizationToken(
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI1ZGRmZWIxMTI5YzhjNzAwMGVlZTFkMWYiLCJpYXQiOjE1NzQ5NTU4MTQsImV4cCI6MTU3NzU0NzgxNH0.ksFyLjEBZ8httyk566o2bsDTg0C722mUdb0347LsK4A"
+  localStorage.getItem("currentUser")
+    ? JSON.parse(localStorage.getItem("currentUser")).jwt
+    : null
 );
 
-axios.defaults.headers.common['Content-Type'] = 'application/json';
+axios.defaults.headers.common["Content-Type"] = "application/json";
 
 axios.interceptors.request.use(
   config => {
@@ -36,7 +38,7 @@ axios.interceptors.response.use(
         response: { data, status }
       } = err;
       if (status === 401) {
-        store.dispatch("auth/signOut");
+        store.dispatch("auth/actionLogout");
       }
       throw data.message || data;
     } else if (err.request) {
@@ -50,9 +52,8 @@ axios.interceptors.response.use(
 export default axios;
 
 export function setCommonAuthorizationToken(jwt) {
-  if (!jwt) return;
-  localStorage.jwt = jwt;
-  // axios.defaults.headers.common.Authorization = "Bearer " + jwt;licenses
+  if (!jwt) return {};
+  axios.defaults.headers.common.Authorization = "Bearer " + jwt;
 }
 
 export function removeCommonAuthorizationToken() {

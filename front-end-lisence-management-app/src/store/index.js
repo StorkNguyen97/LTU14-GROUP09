@@ -3,7 +3,6 @@ import Vuex from 'vuex';
 import auth from './modules/auth';
 import license from './modules/license';
 import user from './modules/user';
-import device from './modules/device';
 import software from './modules/software';
 
 Vue.use(Vuex);
@@ -15,7 +14,6 @@ export default new Vuex.Store({
         auth,
         license,
         user,
-        device,
         software
     },
     strict: debug
