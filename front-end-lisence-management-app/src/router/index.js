@@ -3,13 +3,13 @@ import Router from "vue-router";
 
 // Containers
 const DefaultContainer = () => import("@/containers/DefaultContainer");
+const DefaultClientLayout = () => import("@/containers/DefaultClientLayout");
 
 // Views
 const License = () => import("@/views/License");
 const User = () => import("@/views/User");
 const Software = () => import("@/views/Software");
 const UserSoftware = () => import("@/views/UserSoftware");
-
 
 // Views - Pages
 const Page404 = () => import("@/views/pages/Page404");
@@ -51,10 +51,19 @@ function configRoutes() {
       beforeEnter: ifNotAuthenticated
     },
     {
-      path: "/dashboard",
+      path: "/user",
       name: "Dashboard",
-      component: Dashboard,
-      beforeEnter: ifAuthenticated
+      redirect: "/user/dashboard",
+      component: DefaultClientLayout,
+      beforeEnter: ifAuthenticated,
+      children: [
+        {
+          path: "dashboard",
+          name: "Dashboard",
+          component: Dashboard,
+          beforeEnter: ifAuthenticated
+        }
+      ]
     },
     {
       path: "*",
@@ -84,7 +93,6 @@ function configRoutes() {
           name: "Software",
           component: Software,
           beforeEnter: ifAuthenticated
-
         },
         {
           path: "user/software",
