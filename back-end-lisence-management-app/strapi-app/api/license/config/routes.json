@@ -55,6 +55,14 @@
       "config": {
         "policies": []
       }
+    },
+    {
+      "method": "POST",
+      "path": "/licenses/verify",
+      "handler": "License.verify",
+      "config": {
+        "policies": []
+      }
     }
   ]
 }

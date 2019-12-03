@@ -1162,7 +1162,7 @@
               }
             }
           },
-          "devices": {
+          "licenses": {
             "type": "array",
             "items": {
               "required": [
@@ -1172,20 +1172,20 @@
                 "id": {
                   "type": "string"
                 },
-                "name": {
+                "key": {
                   "type": "string"
                 },
-                "status": {
+                "expriedDate": {
                   "type": "string"
+                },
+                "software": {
+                  "type": "string"
+                },
+                "isActive": {
+                  "type": "boolean"
                 },
                 "user": {
                   "type": "string"
-                },
-                "licenses": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
                 }
               }
             }
@@ -1227,7 +1227,7 @@
           "role": {
             "type": "string"
           },
-          "devices": {
+          "licenses": {
             "type": "array",
             "items": {
               "type": "string"

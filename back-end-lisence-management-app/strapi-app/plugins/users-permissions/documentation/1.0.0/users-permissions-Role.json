@@ -603,7 +603,7 @@
                 "role": {
                   "type": "string"
                 },
-                "devices": {
+                "licenses": {
                   "type": "array",
                   "items": {
                     "type": "string"

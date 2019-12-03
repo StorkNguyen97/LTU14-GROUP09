@@ -19,13 +19,13 @@
       "model": "software",
       "via": "licenses"
     },
-    "devices": {
-      "collection": "device",
-      "via": "licenses",
-      "dominant": true
-    },
     "isActive": {
       "type": "boolean"
+    },
+    "user": {
+      "model": "user",
+      "via": "licenses",
+      "plugin": "users-permissions"
     }
   }
 }
