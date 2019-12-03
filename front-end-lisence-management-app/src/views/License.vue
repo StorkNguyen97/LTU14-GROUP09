@@ -30,7 +30,11 @@
           <span>{{ data.value.name }}</span>
         </template>
         <template slot="isActive" slot-scope="data">
-          <span>{{ data.value }}</span>
+          <b-badge :variant="data.value ? 'success' : 'secondary'">
+            {{
+            data.value ? 'ACTIVE' : 'INACTIVE'
+            }}
+          </b-badge>
         </template>
         <template slot="devices" slot-scope="data">
           <span v-for="(item,index) in data.value" :key="index">
