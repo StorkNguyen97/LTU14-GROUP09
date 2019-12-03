@@ -15,6 +15,9 @@ const Page500 = () => import("@/views/pages/Page500");
 const Login = () => import("@/views/pages/Login");
 const Register = () => import("@/views/pages/Register");
 
+// Views - Client
+const Dashboard = () => import("@/views/client/Dashboard");
+
 // VueX store
 import store from "../store";
 
@@ -44,6 +47,12 @@ function configRoutes() {
       name: "Login",
       component: Login,
       beforeEnter: ifNotAuthenticated
+    },
+    {
+      path: "/dashboard",
+      name: "Dashboard",
+      component: Dashboard,
+      beforeEnter: ifAuthenticated
     },
     {
       path: "*",
