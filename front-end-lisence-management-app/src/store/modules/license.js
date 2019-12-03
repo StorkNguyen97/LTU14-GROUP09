@@ -1,6 +1,6 @@
 import axios from "@/plugin/axios";
 const LICENSE_API = "/licenses";
-import {getHashSignature} from '../../helpers/getHashSignature.js';
+import { getHashSignature } from "../../helpers/getHashSignature.js";
 // Init state
 const state = {
   items: [],
@@ -23,17 +23,18 @@ const actions = {
     });
   },
   add: (context, params) => {
-    return axios.request({
-      method: 'POST',
-      url: `${LICENSE_API}/generate`,
-      headers: {
-        "ol-signature": getHashSignature(params),
-      },
-      data: params
-    })
+    return axios
+      .request({
+        method: "POST",
+        url: `${LICENSE_API}/generate`,
+        headers: {
+          "ol-signature": getHashSignature(params)
+        },
+        data: params
+      })
       .then(response => {
         context.commit("ADD_NEW_SUCCESS", response);
-      })
+      });
   },
   update: (context, params) => {
     return axios.put(`${LICENSE_API}/${params.id}`, params).then(response => {
@@ -67,7 +68,7 @@ const mutations = {
   },
   DELETE_BY_ID_SUCCESS(state, params) {
     function findLicenseIndex(element) {
-      return element.id === params.id;
+      return element.id === params;
     }
     const index = state.items.findIndex(findLicenseIndex);
     state.items.splice(index, 1);

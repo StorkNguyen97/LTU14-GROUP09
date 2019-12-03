@@ -58,7 +58,7 @@ const mutations = {
   },
   DELETE_BY_ID_SUCCESS(state, params) {
     function findLicenseIndex(element) {
-      return element.id === params.id;
+      return element.id === params;
     }
     const index = state.items.findIndex(findLicenseIndex);
     state.items.splice(index, 1);
