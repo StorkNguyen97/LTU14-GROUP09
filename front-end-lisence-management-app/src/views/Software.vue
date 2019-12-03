@@ -24,9 +24,7 @@
           <span>{{ data.value | formatDateTime }}</span>
         </template>
         <template slot="licenses" slot-scope="data">
-          <span v-for="(item,index) in data.value" :key="index">
-            <span>{{ item.name }}</span>
-          </span>
+            <span>{{ data.value.length }}</span>
         </template>
         <template slot="actions" slot-scope="row">
           <b-button

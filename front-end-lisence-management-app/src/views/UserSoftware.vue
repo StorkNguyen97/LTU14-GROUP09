@@ -1,11 +1,5 @@
 <template>
   <div class="animated fadeIn h-100">
-    <div class="text-right">
-      <b-button variant="primary" @click="openCreateModal()">
-        <i class="fa fa-plus mr-1"></i>
-        CREATE LICENSE
-      </b-button>
-    </div>
     <b-card class="mt-2">
       <b-table
         striped
@@ -20,31 +14,16 @@
           slot="index"
           slot-scope="data"
         >{{ (currentPage - 1) * CONSTANTS.ITEM_PER_PAGE + (data.index + 1) }}</template>
-        <template slot="createdAt" slot-scope="data">
-          <span>{{ data.value | formatDateTime }}</span>
+        <template slot="software" slot-scope="data">
+          <span>{{ data.value.name }}</span>
+        </template>
+        <template slot="licenses" slot-scope="data">
+          <span>{{ data.value }}</span>
         </template>
         <template slot="expriedDate" slot-scope="data">
           <span>{{ data.value | formatDateTime }}</span>
         </template>
-        <template slot="software" slot-scope="data">
-          <span>{{ data.value.name }}</span>
-        </template>
-        <template slot="user" slot-scope="data">
-          <span>{{ data.value.username }}</span>
-        </template>
-        <template slot="isActive" slot-scope="data">
-          <b-badge :variant="data.value ? 'success' : 'secondary'">
-            {{
-            data.value ? 'ACTIVE' : 'INACTIVE'
-            }}
-          </b-badge>
-        </template>
-        <template slot="devices" slot-scope="data">
-          <span v-for="(item,index) in data.value" :key="index">
-            <span>{{ item.name }}</span>
-            <span v-if="index !== data.value.length -1">{{", "}}</span>
-          </span>
-        </template>
+
         <template slot="actions" slot-scope="row">
           <b-button
             variant="primary"
@@ -87,37 +66,19 @@
       no-close-on-esc
       no-close-on-backdrop
     >
-      <b-form-group label="Software">
-        <v-select
-          v-model="itemInfo.software"
-          taggable
-          :options="listSoftwares"
-          label="name"
-          name="software"
-          placeholder="Select"
+      <b-form-group label="Name">
+        <b-form-input
+          maxlength="255"
+          v-model="itemInfo.name"
           v-validate="'required'"
-          data-vv-as="Software"
-        />
+          placeholder="Name"
+          name="name"
+          data-vv-as="Name"
+        ></b-form-input>
         <div
-          v-show="errors.has('software')"
+          v-show="errors.has('name')"
           class="validation-message text-danger"
-        >{{ errors.first('software') }}</div>
-      </b-form-group>
-      <b-form-group label="User">
-        <v-select
-          v-model="itemInfo.user"
-          taggable
-          :options="listUsers"
-          label="username"
-          name="user"
-          placeholder="Select"
-          v-validate="'required'"
-          data-vv-as="User"
-        />
-        <div
-          v-show="errors.has('user')"
-          class="validation-message text-danger"
-        >{{ errors.first('user') }}</div>
+        >{{ errors.first('name') }}</div>
       </b-form-group>
     </b-modal>
 
@@ -139,9 +100,7 @@ import CONSTANTS from "@/constants";
 export default {
   mounted: function() {
     this.$nextTick(function() {
-      this.getList();
-      this.getListSoftware();
-      this.getListUser();
+      this.getList("?user=5de484f645073a000de4e89f");
     });
   },
   components: {},
@@ -149,21 +108,15 @@ export default {
     return {
       fields: [
         { tdClass: "align-middle", key: "index", label: "#" },
-        { tdClass: "align-middle", key: "key" },
-        { tdClass: "align-middle", key: "expriedDate" },
+        { tdClass: "align-middle", key: "software" },
         {
           tdClass: "align-middle",
-          key: "software"
+          key: "key"
         },
         {
           tdClass: "align-middle",
-          key: "user"
+          key: "expriedDate"
         },
-        {
-          tdClass: "align-middle",
-          key: "isActive"
-        },
-        { tdClass: "align-middle", key: "createdAt" },
         {
           thClass: "fixed-actions-col",
           key: "actions"
@@ -178,9 +131,7 @@ export default {
   computed: {
     ...mapState({
       items: state => state.license.items,
-      item: state => state.license.item,
-      listUsers: state => state.user.items,
-      listSoftwares: state => state.software.items
+      item: state => state.license.item
     }),
     countRow() {
       return this.items.length;
@@ -188,13 +139,11 @@ export default {
   },
   methods: {
     ...mapActions({
-      getList: "license/getList",
-      getListSoftware: "software/getList",
-      getListUser: "user/getList",
-      createNew: "license/add",
-      getInfo: "license/getById",
-      updateInfo: "license/update",
-      deleteById: "license/deleteById"
+      getList: "license/getListByFilter",
+      createNew: "software/add",
+      getInfo: "software/getById",
+      updateInfo: "software/update",
+      deleteById: "software/deleteById"
     }),
     handleCreateOk(modal) {
       modal.preventDefault();
@@ -250,6 +199,7 @@ export default {
     },
     resetForm() {
       this.itemInfo = {};
+      this.itemInfo.status = "ACTIVE";
     }
   }
 };

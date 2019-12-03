@@ -538,14 +538,11 @@
                 "software": {
                   "type": "string"
                 },
-                "devices": {
-                  "type": "array",
-                  "items": {
-                    "type": "string"
-                  }
-                },
                 "isActive": {
                   "type": "boolean"
+                },
+                "user": {
+                  "type": "string"
                 }
               }
             }

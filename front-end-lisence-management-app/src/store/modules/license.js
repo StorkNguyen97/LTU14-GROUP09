@@ -17,6 +17,11 @@ const actions = {
       context.commit("GET_LIST_SUCCESS", response);
     });
   },
+  getListByFilter: (context, params) => {
+    return axios.get(`${LICENSE_API}/${params}`).then(response => {
+      context.commit("GET_LIST_SUCCESS", response);
+    });
+  },
   getById: (context, params) => {
     return axios.get(`${LICENSE_API}/${params}`).then(response => {
       context.commit("GET_INFO_SUCCESS", response);

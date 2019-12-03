@@ -49,8 +49,8 @@
       "plugin": "users-permissions",
       "configurable": false
     },
-    "devices": {
-      "collection": "device",
+    "licenses": {
+      "collection": "license",
       "via": "user"
     }
   },

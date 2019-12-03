@@ -76,12 +76,15 @@ module.exports = {
   },
 
   generateLicense: async (ctx) => {
-    console.log('ok')
     const hashString = getHashString(ctx.request.body);
     if (ctx.request.header['ol-signature'] === hashString) {
     return strapi.services.license.generateLicense(ctx.request.body);
     } else {
       throw new Error('Invalid key');
     }
+  },
+
+  verify: async (ctx) => {
+    return strapi.services.license.verify(ctx.request.body);
   },
 };

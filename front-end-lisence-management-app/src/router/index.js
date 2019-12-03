@@ -8,6 +8,8 @@ const DefaultContainer = () => import("@/containers/DefaultContainer");
 const License = () => import("@/views/License");
 const User = () => import("@/views/User");
 const Software = () => import("@/views/Software");
+const UserSoftware = () => import("@/views/UserSoftware");
+
 
 // Views - Pages
 const Page404 = () => import("@/views/pages/Page404");
@@ -81,6 +83,13 @@ function configRoutes() {
           path: "software",
           name: "Software",
           component: Software,
+          beforeEnter: ifAuthenticated
+
+        },
+        {
+          path: "user/software",
+          name: "UserSoftware",
+          component: UserSoftware,
           beforeEnter: ifAuthenticated
         }
       ]
