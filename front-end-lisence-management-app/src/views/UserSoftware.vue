@@ -23,27 +23,6 @@
         <template slot="expriedDate" slot-scope="data">
           <span>{{ data.value | formatDateTime }}</span>
         </template>
-
-        <template slot="actions" slot-scope="row">
-          <b-button
-            variant="primary"
-            class="mr-1 min-width-none"
-            @click="showUpdateGroupModal(row.item._id)"
-            v-b-tooltip.hover
-            title="Edit"
-          >
-            <i class="fa fa-pencil"></i>
-          </b-button>
-          <b-button
-            variant="danger"
-            @click="confirmDelete(row.item._id)"
-            v-b-tooltip.hover
-            class="min-width-none"
-            title="Delete"
-          >
-            <i class="fa fa-trash"></i>
-          </b-button>
-        </template>
       </b-table>
       <div v-if="countRow > CONSTANTS.ITEM_PER_PAGE" class="my-1">
         <b-pagination
@@ -100,7 +79,7 @@ import CONSTANTS from "@/constants";
 export default {
   mounted: function() {
     this.$nextTick(function() {
-      this.getList("?user=5de484f645073a000de4e89f");
+      this.getList(`?user=${this.authUser.user._id}&isActive=true`);
     });
   },
   components: {},
@@ -116,10 +95,6 @@ export default {
         {
           tdClass: "align-middle",
           key: "expriedDate"
-        },
-        {
-          thClass: "fixed-actions-col",
-          key: "actions"
         }
       ],
       itemInfo: {},
@@ -131,7 +106,8 @@ export default {
   computed: {
     ...mapState({
       items: state => state.license.items,
-      item: state => state.license.item
+      item: state => state.license.item,
+      authUser: state => state.auth.currentUser
     }),
     countRow() {
       return this.items.length;

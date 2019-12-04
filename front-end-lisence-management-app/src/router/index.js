@@ -24,24 +24,31 @@ const Dashboard = () => import("@/views/client/Dashboard");
 import store from "../store";
 
 Vue.use(Router);
-
 // Before enter functions
 const ifNotAuthenticated = (to, from, next) => {
   if (!store.getters["auth/isAuthenticated"]) {
     next();
     return;
   }
-  next("/");
 };
 
 const ifAuthenticated = (to, from, next) => {
   if (store.getters["auth/isAuthenticated"]) {
-    console.log('store', store.getters["auth/currentUser"])
-    next();
+    checkPermissions(to, from, next);
+    // next();
     return;
   }
   next("/login");
 };
+
+const checkPermissions = (to, from, next) => {
+  next();
+  const { role } = to.meta;
+  // const currentUser = store.getters["auth/currentUser"]
+  // if (role === "Administrator" && currentUser && currentUser.user && currentUser.user.role && currentUser.user.role.name === "Administrator") {
+  //   next();
+  // }
+}
 
 function configRoutes() {
   return [
@@ -63,19 +70,19 @@ function configRoutes() {
           name: "Dashboard",
           component: Dashboard,
           beforeEnter: ifAuthenticated
-        }
-      ]
+        },
+        {
+          path: "software",
+          name: "UserSoftware",
+          component: UserSoftware,
+          beforeEnter: ifAuthenticated
+        },
+      ],
     },
     {
       path: "*",
       name: "Page404",
       component: Page404
-    },
-    {
-      path: "/user/software",
-      name: "UserSoftware",
-      component: UserSoftware,
-      beforeEnter: ifAuthenticated
     },
     {
       path: "/",
@@ -87,19 +94,22 @@ function configRoutes() {
           path: "license",
           name: "License",
           component: License,
-          beforeEnter: ifAuthenticated
+          beforeEnter: ifAuthenticated,
+          meta: { role: "Administrator" }
         },
         {
           path: "user",
           name: "User",
           component: User,
-          beforeEnter: ifAuthenticated
+          beforeEnter: ifAuthenticated,
+          meta: { role: "Administrator" }
         },
         {
           path: "software",
           name: "Software",
           component: Software,
-          beforeEnter: ifAuthenticated
+          beforeEnter: ifAuthenticated,
+          meta: { role: "Administrator" }
         },
       ]
     },

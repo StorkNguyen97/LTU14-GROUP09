@@ -2,7 +2,7 @@
   <div class="app">
     <Header />
     <div class="app-body">
-      <main class="h-100">
+      <main class="h-100 w-100">
         <div class="container-fluid mt-2">
           <router-view></router-view>
         </div>

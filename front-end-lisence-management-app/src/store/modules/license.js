@@ -1,10 +1,14 @@
 import axios from "@/plugin/axios";
+
 const LICENSE_API = "/licenses";
-import { getHashSignature } from "../../helpers/getHashSignature.js";
+import {
+  getHashSignature
+} from "../../helpers/getHashSignature.js";
 // Init state
 const state = {
   items: [],
-  item: {}
+  item: {},
+  newActiveKey: null,
 };
 
 // Getters
@@ -41,6 +45,17 @@ const actions = {
         context.commit("ADD_NEW_SUCCESS", response);
       });
   },
+  verify: (context, params) => {
+    return axios
+      .request({
+        method: "POST",
+        url: `${LICENSE_API}/verify`,
+        data: params
+      })
+      .then(response => {
+        context.commit("ACTIVE_KEY_SUCCESS", response);
+      })
+  },
   update: (context, params) => {
     return axios.put(`${LICENSE_API}/${params.id}`, params).then(response => {
       context.commit("UPDATE_INFO_SUCCESS", response);
@@ -55,6 +70,9 @@ const actions = {
 
 // Mutation
 const mutations = {
+  ACTIVE_KEY_SUCCESS(state, items) {
+    state.newActiveKey = items;
+  },
   GET_LIST_SUCCESS(state, items) {
     state.items = items;
   },
