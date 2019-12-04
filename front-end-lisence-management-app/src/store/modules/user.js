@@ -35,7 +35,7 @@ const actions = {
     });
   },
   update: (context, params) => {
-    return axios.put(`${USER_API}/${params.id}`, params).then(response => {
+    return axios.put(`${USER_API}/${params._id}`, params).then(response => {
     context.commit("UPDATE_INFO_SUCCESS", response);
     });
   },

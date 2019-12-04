@@ -546,6 +546,9 @@
                 }
               }
             }
+          },
+          "description": {
+            "type": "string"
           }
         }
       },
@@ -559,6 +562,9 @@
             "items": {
               "type": "string"
             }
+          },
+          "description": {
+            "type": "string"
           }
         }
       }

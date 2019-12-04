@@ -1,7 +1,10 @@
 <template>
   <div>
     <nav class="app-header navbar navbar-expand-lg navbar-light bg-light">
-      <a class="navbar-brand" href="#">Navbar</a>
+      <a class="navbar-brand" href="#/user/dashboard">
+      <img src="https://www.cprime.com/wp-content/uploads/2015/05/3.png" height="100%" class="logo"/>
+      </a>
+      <!-- <a class="navbar-brand" href="#">Navbar</a> -->
       <button
         class="navbar-toggler"
         type="button"

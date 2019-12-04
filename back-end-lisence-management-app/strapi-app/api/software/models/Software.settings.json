@@ -15,6 +15,9 @@
     "licenses": {
       "collection": "license",
       "via": "software"
+    },
+    "description": {
+      "type": "string"
     }
   }
 }
