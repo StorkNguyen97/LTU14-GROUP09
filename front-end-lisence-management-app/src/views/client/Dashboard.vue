@@ -88,7 +88,7 @@ export default {
       this.$refs.buyModal.show();
     },
     onBuy(modal) {
-      this.genKey().then(res => {
+      this.genKey(this.currentId).then(res => {
         this.licenseKey = res.key;
         this.$refs.buyModal.hide();
         this.$toaster.success("Active Successfully!");
