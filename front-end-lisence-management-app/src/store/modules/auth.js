@@ -31,6 +31,10 @@ const mutations = {
   LOGIN_SUCCESS: (state, response) => {
     state.currentUser = response;
     localStorage.setItem("currentUser", JSON.stringify(state.currentUser));
+    const jwt = localStorage.getItem("currentUser")
+      ? JSON.parse(localStorage.getItem("currentUser")).jwt
+      : null;
+    axios.defaults.headers.common.Authorization = "Bearer " + jwt;
   },
   LOGOUT_SUCCESS: state => {
     state.currentUser = null;

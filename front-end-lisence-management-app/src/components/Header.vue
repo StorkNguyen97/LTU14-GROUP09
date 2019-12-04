@@ -19,12 +19,19 @@
           <li class="nav-item">
             <a class="nav-link" href="#/user/dashboard">Home</a>
           </li>
-               <li class="nav-item">
+          <li class="nav-item">
             <a class="nav-link" href="#/user/software">My Softwares</a>
           </li>
         </ul>
         <div style="padding: 40px">
           <button class="btn btn-outline-success" @click="openLicenseModal">Active license key</button>
+          <i
+            class="ml-4 fa fa-sign-out"
+            v-b-tooltip.hover
+            title="Log out"
+            style="cursor: pointer"
+            @click="logout"
+          ></i>
         </div>
       </div>
     </nav>
@@ -71,7 +78,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      verify: "license/verify"
+      verify: "license/verify",
+      actionLogout: "auth/actionLogout"
     }),
     openLicenseModal() {
       this.resetForm();
@@ -83,10 +91,15 @@ export default {
     async verifyKey(modal) {
       try {
         await this.verify({ key: this.key, user: this.authUser.user._id });
-        this.$toaster.success("Active License key successfully!")
+        this.$toaster.success("Active License key successfully!");
       } catch (err) {
-        this.$toaster.error("Invalid license key!")
+        this.$toaster.error("Invalid license key!");
       }
+    },
+    logout() {
+      this.actionLogout().then(() => {
+        this.$router.push("/login");
+      });
     }
   }
 };

@@ -1,5 +1,7 @@
 import axios from "@/plugin/axios";
 const USER_API = "/users";
+const ROLE_API = "/users-permissions/roles";
+
 // Init state
 const state = {
   items: [],
@@ -14,6 +16,11 @@ const actions = {
   getList: context => {
     return axios.get(USER_API).then(response => {
       context.commit("GET_LIST_SUCCESS", response);
+    });
+  },
+  getListRoles: context => {
+    return axios.get(ROLE_API).then(response => {
+      context.commit("GET_ROLE_SUCCESS", response);
     });
   },
   getById: (context, params) => {

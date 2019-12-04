@@ -43,12 +43,18 @@ const ifAuthenticated = (to, from, next) => {
 
 const checkPermissions = (to, from, next) => {
   next();
-  const { role } = to.meta;
-  // const currentUser = store.getters["auth/currentUser"]
-  // if (role === "Administrator" && currentUser && currentUser.user && currentUser.user.role && currentUser.user.role.name === "Administrator") {
+  // const { role } = to.meta;
+  // const currentUser = store.getters["auth/currentUser"];
+  // if (
+  //   role === "Administrator" &&
+  //   currentUser &&
+  //   currentUser.user &&
+  //   currentUser.user.role &&
+  //   currentUser.user.role.name === "Administrator"
+  // ) {
   //   next();
-  // }
-}
+  // } else return;
+};
 
 function configRoutes() {
   return [
@@ -63,7 +69,6 @@ function configRoutes() {
       name: "Dashboard",
       redirect: "/user/dashboard",
       component: DefaultClientLayout,
-      beforeEnter: ifAuthenticated,
       children: [
         {
           path: "dashboard",
@@ -76,8 +81,8 @@ function configRoutes() {
           name: "UserSoftware",
           component: UserSoftware,
           beforeEnter: ifAuthenticated
-        },
-      ],
+        }
+      ]
     },
     {
       path: "*",
@@ -110,7 +115,7 @@ function configRoutes() {
           component: Software,
           beforeEnter: ifAuthenticated,
           meta: { role: "Administrator" }
-        },
+        }
       ]
     },
     {

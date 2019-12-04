@@ -212,9 +212,7 @@ module.exports = {
     return License.updateRelations({ _id: entry.id, values: relations });
   },
   verify: async (values) => {
-    console.log('values', values)
     const existedKey = await strapi.services.license.fetch({key: values.key});
-    console.log('existedKey.expriedDate', existedKey.expriedDate)
     if (existedKey && existedKey.isActive === false && !existedKey.expriedDate) {
       const date = new Date();
       date.setDate(date.getDate() + 1); 
