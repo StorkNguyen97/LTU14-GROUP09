@@ -24,10 +24,10 @@
               </b-col>
               <b-col md="6">
                 <b-card-body :title="item.name">
-                  <b-card-text>
-                    This is a wider card with supporting text as a natural lead-in to additional content.
-                    This content is a little bit longer.
-                  </b-card-text>
+                  <b-card-text>{{item.description}}</b-card-text>
+                  <b-button class="mt-5" variant="primary" @click="buyLicense(item.id)">
+                    <i class="fa fa-cart-plus"></i>
+                  </b-button>
                 </b-card-body>
               </b-col>
             </b-row>
@@ -35,6 +35,24 @@
         </b-col>
       </b-row>
     </div>
+
+    <!-- Confirm Buy -->
+    <b-modal
+      ref="buyModal"
+      title="Confirmation"
+      no-close-on-esc
+      no-close-on-backdrop
+      @ok="onBuy"
+    >Are you sure to active this software?</b-modal>
+
+    <!-- Result Buy -->
+    <b-modal
+      ref="showKey"
+      title="Success"
+      no-close-on-esc
+      no-close-on-backdrop
+      hide-footer
+    >Your license: {{licenseKey}}</b-modal>
   </div>
 </template>
 
@@ -44,7 +62,10 @@ import { mapActions, mapState } from "vuex";
 export default {
   name: "Dashboard",
   data() {
-    return {};
+    return {
+      currentId: null,
+      licenseKey: ""
+    };
   },
   mounted: function() {
     this.$nextTick(function() {
@@ -59,8 +80,21 @@ export default {
   },
   methods: {
     ...mapActions({
-      getList: "software/getList"
-    })
+      getList: "software/getList",
+      genKey: "license/add"
+    }),
+    buyLicense(id) {
+      this.currentId = id;
+      this.$refs.buyModal.show();
+    },
+    onBuy(modal) {
+      this.genKey().then(res => {
+        this.licenseKey = res.key;
+        this.$refs.buyModal.hide();
+        this.$toaster.success("Active Successfully!");
+        this.$refs.showKey.show();
+      });
+    }
   }
 };
 </script>

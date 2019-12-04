@@ -1,14 +1,12 @@
 import axios from "@/plugin/axios";
 
 const LICENSE_API = "/licenses";
-import {
-  getHashSignature
-} from "../../helpers/getHashSignature.js";
+import { getHashSignature } from "../../helpers/getHashSignature.js";
 // Init state
 const state = {
   items: [],
   item: {},
-  newActiveKey: null,
+  newActiveKey: null
 };
 
 // Getters
@@ -43,6 +41,7 @@ const actions = {
       })
       .then(response => {
         context.commit("ADD_NEW_SUCCESS", response);
+        return response;
       });
   },
   verify: (context, params) => {
@@ -54,7 +53,7 @@ const actions = {
       })
       .then(response => {
         context.commit("ACTIVE_KEY_SUCCESS", response);
-      })
+      });
   },
   update: (context, params) => {
     return axios.put(`${LICENSE_API}/${params.id}`, params).then(response => {
