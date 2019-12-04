@@ -24,7 +24,7 @@
           <span>{{ data.value | formatDateTime }}</span>
         </template>
         <template slot="licenses" slot-scope="data">
-            <span>{{ data.value.length }}</span>
+          <span>{{ data.value.length }}</span>
         </template>
         <template slot="actions" slot-scope="row">
           <b-button
@@ -81,6 +81,22 @@
           v-show="errors.has('name')"
           class="validation-message text-danger"
         >{{ errors.first('name') }}</div>
+      </b-form-group>
+      <b-form-group label="Description">
+        <b-form-textarea
+          maxlength="255"
+          v-model="itemInfo.description"
+          v-validate="'required'"
+          placeholder="Description"
+          name="description"
+          rows="3"
+          max-rows="6"
+          data-vv-as="Description"
+        ></b-form-textarea>
+        <div
+          v-show="errors.has('description')"
+          class="validation-message text-danger"
+        >{{ errors.first('description') }}</div>
       </b-form-group>
     </b-modal>
 
