@@ -7,11 +7,11 @@ const axios = Axios.create({
   baseURL: process.env.VUE_APP_API_ENDPOINT
 });
 
-// setCommonAuthorizationToken(
-//   localStorage.getItem("currentUser")
-//     ? JSON.parse(localStorage.getItem("currentUser")).jwt
-//     : null
-// );
+setCommonAuthorizationToken(
+  localStorage.getItem("currentUser")
+    ? JSON.parse(localStorage.getItem("currentUser")).jwt
+    : null
+);
 
 axios.defaults.headers.common["Content-Type"] = "application/json";
 
@@ -51,10 +51,10 @@ axios.interceptors.response.use(
 
 export default axios;
 
-// export function setCommonAuthorizationToken(jwt) {
-//   if (!jwt) return {};
-//   axios.defaults.headers.common.Authorization = "Bearer " + jwt;
-// }
+export function setCommonAuthorizationToken(jwt) {
+  if (!jwt) return {};
+  axios.defaults.headers.common.Authorization = "Bearer " + jwt;
+}
 
 export function removeCommonAuthorizationToken() {
   delete axios.defaults.headers.common.Authorization;

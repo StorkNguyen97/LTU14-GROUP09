@@ -7,7 +7,7 @@ export default {
     },
     {
       name: "User",
-      url: "/user",
+      url: "/user-admin",
       icon: "fa fa-user"
     },
     {

@@ -5,6 +5,7 @@ const ROLE_API = "/users-permissions/roles";
 // Init state
 const state = {
   items: [],
+  listRoles: [],
   item: {}
 };
 
@@ -49,6 +50,9 @@ const actions = {
 const mutations = {
   GET_LIST_SUCCESS(state, items) {
     state.items = items;
+  },
+  GET_ROLE_SUCCESS(state, items) {
+    state.listRoles = items.roles;
   },
   GET_INFO_SUCCESS(state, item) {
     state.item = item;

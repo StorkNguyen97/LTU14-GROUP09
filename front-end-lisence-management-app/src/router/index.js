@@ -42,18 +42,20 @@ const ifAuthenticated = (to, from, next) => {
 };
 
 const checkPermissions = (to, from, next) => {
-  next();
-  // const { role } = to.meta;
-  // const currentUser = store.getters["auth/currentUser"];
-  // if (
-  //   role === "Administrator" &&
-  //   currentUser &&
-  //   currentUser.user &&
-  //   currentUser.user.role &&
-  //   currentUser.user.role.name === "Administrator"
-  // ) {
-  //   next();
-  // } else return;
+  const { role } = to.meta;
+  const currentUser = store.getters["auth/currentUser"];
+  if (role === "Administrator") {
+    if (
+      currentUser &&
+      currentUser.user &&
+      currentUser.user.role &&
+      currentUser.user.role.name === "Administrator"
+    ) {
+      next();
+    } else {
+      next("/user/dashboard");
+    }
+  } else next();
 };
 
 function configRoutes() {
@@ -103,7 +105,7 @@ function configRoutes() {
           meta: { role: "Administrator" }
         },
         {
-          path: "user",
+          path: "user-admin",
           name: "User",
           component: User,
           beforeEnter: ifAuthenticated,

@@ -106,7 +106,8 @@
       <b-form-group label="Role">
         <v-select
           v-model="itemInfo.role"
-          :options="['Administrator','Authenticated']"
+          :options="listRoles"
+          label="name"
           name="role"
           placeholder="Select"
           v-validate="'required'"
@@ -138,6 +139,7 @@ export default {
   mounted: function() {
     this.$nextTick(function() {
       this.getList();
+      this.getListRoles();
     });
   },
   components: {},
@@ -162,6 +164,7 @@ export default {
   computed: {
     ...mapState({
       items: state => state.user.items,
+      listRoles: state => state.user.listRoles,
       item: state => state.user.item
     }),
     countRow() {
@@ -172,6 +175,7 @@ export default {
     ...mapActions({
       getList: "user/getList",
       createNew: "user/add",
+      getListRoles: "user/getListRoles",
       getInfo: "user/getById",
       updateInfo: "user/update",
       deleteById: "user/deleteById"
