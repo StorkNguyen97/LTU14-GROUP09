@@ -18,6 +18,10 @@
     },
     "description": {
       "type": "string"
+    },
+    "devices": {
+      "collection": "device",
+      "via": "software"
     }
   }
 }
