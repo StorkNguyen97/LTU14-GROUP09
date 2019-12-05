@@ -608,6 +608,12 @@
                   "items": {
                     "type": "string"
                   }
+                },
+                "devices": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
                 }
               }
             }

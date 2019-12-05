@@ -549,6 +549,28 @@
           },
           "description": {
             "type": "string"
+          },
+          "devices": {
+            "type": "array",
+            "items": {
+              "required": [
+                "id"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string"
+                },
+                "name": {
+                  "type": "string"
+                },
+                "user": {
+                  "type": "string"
+                },
+                "software": {
+                  "type": "string"
+                }
+              }
+            }
           }
         }
       },
@@ -565,6 +587,12 @@
           },
           "description": {
             "type": "string"
+          },
+          "devices": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
           }
         }
       }
