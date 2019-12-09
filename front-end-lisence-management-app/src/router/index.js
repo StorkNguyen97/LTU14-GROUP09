@@ -86,7 +86,7 @@ function configRoutes() {
           beforeEnter: ifAuthenticated
         },
         {
-          path: "software/:id",
+          path: "app-detail",
           name: "AppDetail",
           component: AppDetail,
           beforeEnter: ifAuthenticated

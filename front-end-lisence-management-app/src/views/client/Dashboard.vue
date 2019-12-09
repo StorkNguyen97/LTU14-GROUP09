@@ -116,18 +116,18 @@ export default {
     },
     useApp(item, index) {
       this.$router.push({
-        name: `${"/user/software/"}${item.id}`,
+        path: "app-detail",
         params: {
-          index: index
+          index: index,
+          item: item
         }
       });
     },
     checkHasLicense(item) {
       const listLicense = item.licenses;
       if (!listLicense.length) {
-        return true
+        return true;
       }
-
       for (let i = 0; i < listLicense.length; i++) {
         if (item.user === this.currentUser.user.id && item.isActive) {
           return true;
