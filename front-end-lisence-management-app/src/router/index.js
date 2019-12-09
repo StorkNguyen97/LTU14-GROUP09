@@ -19,6 +19,7 @@ const Register = () => import("@/views/pages/Register");
 
 // Views - Client
 const Dashboard = () => import("@/views/client/Dashboard");
+const AppDetail = () => import("@/views/client/AppDetail");
 
 // VueX store
 import store from "../store";
@@ -82,6 +83,12 @@ function configRoutes() {
           path: "software",
           name: "UserSoftware",
           component: UserSoftware,
+          beforeEnter: ifAuthenticated
+        },
+        {
+          path: "software/:id",
+          name: "AppDetail",
+          component: AppDetail,
           beforeEnter: ifAuthenticated
         }
       ]

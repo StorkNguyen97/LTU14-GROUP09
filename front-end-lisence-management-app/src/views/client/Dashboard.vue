@@ -25,8 +25,25 @@
               <b-col md="6">
                 <b-card-body :title="item.name">
                   <b-card-text>{{item.description}}</b-card-text>
-                  <b-button class="mt-5" variant="primary" @click="buyLicense(item.id)">
+                  <b-button
+                    class="mt-4"
+                    variant="primary"
+                    v-b-tooltip.hover
+                    title="Click to buy"
+                    v-if="checkHasLicense(item)"
+                    @click="buyLicense(item.id)"
+                  >
                     <i class="fa fa-cart-plus"></i>
+                  </b-button>
+                  <b-button
+                    class="mt-4"
+                    v-b-tooltip.hover
+                    title="Go to app"
+                    v-else
+                    variant="success"
+                    @click="useApp(item,index)"
+                  >
+                    <i class="fa fa-sign-in"></i>
                   </b-button>
                 </b-card-body>
               </b-col>
@@ -64,7 +81,8 @@ export default {
   data() {
     return {
       currentId: null,
-      licenseKey: ""
+      licenseKey: "",
+      decoded: null
     };
   },
   mounted: function() {
@@ -75,7 +93,8 @@ export default {
   computed: {
     ...mapState({
       items: state => state.software.items,
-      item: state => state.software.item
+      item: state => state.software.item,
+      currentUser: state => state.auth.currentUser
     })
   },
   methods: {
@@ -88,12 +107,30 @@ export default {
       this.$refs.buyModal.show();
     },
     onBuy(modal) {
-      this.genKey(this.currentId).then(res => {
+      this.genKey({ software: this.currentId }).then(res => {
         this.licenseKey = res.key;
         this.$refs.buyModal.hide();
         this.$toaster.success("Active Successfully!");
         this.$refs.showKey.show();
       });
+    },
+    useApp(item, index) {
+      this.$router.push({
+        name: `${"/user/software/"}${item.id}`,
+        params: {
+          index: index
+        }
+      });
+    },
+    checkHasLicense(item) {
+      const listLicense = item.licenses;
+      for (let i = 0; i < listLicense.length; i++) {
+        if (item.user === this.currentUser.user.id && item.isActive) {
+          return true;
+        } else {
+          return false;
+        }
+      }
     }
   }
 };
