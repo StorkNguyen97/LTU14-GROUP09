@@ -124,6 +124,10 @@ export default {
     },
     checkHasLicense(item) {
       const listLicense = item.licenses;
+      if (!listLicense.length) {
+        return true
+      }
+
       for (let i = 0; i < listLicense.length; i++) {
         if (item.user === this.currentUser.user.id && item.isActive) {
           return true;
