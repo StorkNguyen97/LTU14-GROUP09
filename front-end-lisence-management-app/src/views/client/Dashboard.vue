@@ -117,9 +117,9 @@ export default {
     useApp(item, index) {
       this.$router.push({
         path: "app-detail",
-        params: {
+        query: {
           index: index,
-          item: item
+          name: item.name
         }
       });
     },
