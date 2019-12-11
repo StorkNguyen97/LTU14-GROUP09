@@ -1,6 +1,9 @@
-# Author: Thinh Nguyen :grinning: :grinning: :grinning:
+## Author: Thinh Nguyen
+
 # LTU14-GROUP09 - Đề tài: Hệ thống quản lý lisence cho người dùng
+
 # Đặc điểm của chương trình
+
 - Chương trình phân tán
 - Sử dụng ngôn ngữ lập trình javascript
 - Sử dụng cơ sở dữ liệu mongodb
@@ -13,6 +16,7 @@
 - Người dùng khi có key điền key vào để kích hoạt sản phẩm và sử dụng ứng dụng
 
 # Chức năng phía Client
+
 - Đăng nhập/ Đăng xuất
 - Tạo sản phẩm, quản lý key với vai trò là admin
 - Với client khi đã đăng nhập có màn hình danh sách sản phẩm và sản phẩm của tôi
@@ -20,12 +24,14 @@
 - Buy product và active lisence key
 
 # Chức năng phía server
+
 - Đăng nhập/ Đăng xuất
 - Quản lý các API, roles và permissions của người dùng với hệ thống
 - Tự động generate ra key, list key và chỉnh sửa key nếu muốn
 - Quản lý các người dùng, phân quyền và danh sách dữ liệu trong CSDL
 
 # Hướng dẫn cách chạy project:
+
 - Bước 1: clone project từ github sử dụng lệnh git clone
 - Bước 2: Chắc chắn rằng bạn đã cài đặt nodejs, mongodb, strapi và docker
 - Bước 3: cd vào folder front-end cài đặt node modules, và cs vào thư mục back-end làm tương tự
@@ -56,17 +62,17 @@ Chắc chắn bạn đã cài đặt docker cli để chạy docker bằng termi
 Để chạy client trên docker chạy : docker-compose up
 Để chạy server trên docker chạy : docker-compose up
 
-
 # Các lệnh trong docker
-- Xem các container đang chạy trên docker : docker ps -a 
-- Để build thư mục chạy trên docker : docker build . 
-- Start 1 container chạy : docker run 
+
+- Xem các container đang chạy trên docker : docker ps -a
+- Để build thư mục chạy trên docker : docker build .
+- Start 1 container chạy : docker run
 - Xoá image/container: docker image/container rm <tên image/container >
-- Delete all image hiện có: docker image rm $(docker images –a –q)
+- Delete all image hiện có: docker image rm \$(docker images –a –q)
 - Stop 1 container cụ thể: docker stop <tên container>
 - Run container từ image và thay đổi tên container: docker run –name <tên container> <tên image>
-- Stop all container: docker stop $(docker ps –a –q)
-- Delete all container hiện có: docker rm $(docker ps –a –q)
+- Stop all container: docker stop \$(docker ps –a –q)
+- Delete all container hiện có: docker rm \$(docker ps –a –q)
 - Show log a container: docker logs <tên container>
 - Build một image từ container: docker build -t <tên container> .
 - Tạo một container chạy ngầm: docker run -d <tên image>
@@ -74,10 +80,12 @@ Chắc chắn bạn đã cài đặt docker cli để chạy docker bằng termi
 - Start một container: docker start <tên container>
 
 # Docker compose
+
 - Công cụ để chạy multiple container cho docker application
 - Giải thích các câu lệnh trong docker compose
 
-# Các câu lệnh trong docker compose    
+# Các câu lệnh trong docker compose
+
 - version: chỉ ra phiên bản docker-compose đã sử dụng.
 - services: thiết lập các services(containers) muốn cài đặt và chạy.
 - image: chỉ ra image được sử dụng trong lúc tạo ra container.
@@ -90,6 +98,9 @@ Chắc chắn bạn đã cài đặt docker cli để chạy docker bằng termi
 - volumes: dùng để mount hai thư mục trên host và container với nhau.
 
 # KẾT QUẢ KHI CHẠY PROJECT
+
+![GitHub Logo](https://imgur.com/hOxIcX9)
+Format: ![Alt Text](url)
 
 ![alt text](https://imgur.com/hOxIcX9)
 ![alt text](https://imgur.com/cQHP4gl)
