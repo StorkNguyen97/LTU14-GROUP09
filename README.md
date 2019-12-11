@@ -99,8 +99,5 @@ Chắc chắn bạn đã cài đặt docker cli để chạy docker bằng termi
 
 # KẾT QUẢ KHI CHẠY PROJECT
 
-[Imgur](https://i.imgur.com/hOxIcX9.png)
-[Imgur](https://i.imgur.com/cQHP4gl.png)
-
-<!-- ![alt text](https://imgur.com/hOxIcX9) -->
-<!-- ![alt text](https://imgur.com/cQHP4gl) -->
+<img width="1680" alt="Screen Shot 2019-12-12 at 12 36 35 AM" src="https://user-images.githubusercontent.com/32331243/70646712-0d1fd800-1c7a-11ea-9879-5f8c618d3bfe.png">
+<img width="1680" alt="Screen Shot 2019-12-12 at 12 36 12 AM" src="https://user-images.githubusercontent.com/32331243/70646777-2aed3d00-1c7a-11ea-9119-ac853011f40e.png">
