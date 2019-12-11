@@ -100,7 +100,7 @@ Chắc chắn bạn đã cài đặt docker cli để chạy docker bằng termi
 # KẾT QUẢ KHI CHẠY PROJECT
 
 ![GitHub Logo](https://imgur.com/hOxIcX9)
-Format: ![Alt Text](url)
+Format: ![Alt Text](https://imgur.com/hOxIcX9)
 
 ![alt text](https://imgur.com/hOxIcX9)
 ![alt text](https://imgur.com/cQHP4gl)
