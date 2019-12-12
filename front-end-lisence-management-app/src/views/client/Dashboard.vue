@@ -129,12 +129,14 @@ export default {
         return true;
       }
       for (let i = 0; i < listLicense.length; i++) {
-        if (item.user === this.currentUser.user.id && item.isActive) {
-          return true;
-        } else {
+        if (
+          listLicense[i].user === this.currentUser.user.id &&
+          listLicense[i].isActive
+        ) {
           return false;
         }
       }
+      return true;
     }
   }
 };
