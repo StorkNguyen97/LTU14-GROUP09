@@ -32,7 +32,7 @@
     "css-vars-ponyfill": "^2.0.2",
     "ejs": "^3.0.1",
     "es6-promise": "^4.2.8",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "flag-icon-css": "^3.3.0",
     "font-awesome": "^4.7.0",
     "lodash": "^4.17.15",
